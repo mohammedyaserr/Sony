@@ -8,7 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 }
 
 .nav-container {
@@ -131,6 +131,7 @@
     margin-left: 10px;
 }
 .nav-right-inner p {
+    font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     transform: scaleY(0.8);
 
 }
