@@ -1,0 +1,139 @@
+
+@font-face {
+    font-family: 'SST';
+    src: url('../../assets/Fonts/SSTMediumCn.TTF');
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.nav-container {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 0, 0);
+}
+
+.nav-inner-div {
+    width: 80%;
+    height: 100%;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 0, 0);
+}
+
+.nav-img-container {
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: red; */
+}
+
+.nav-img-container img {
+    /* height: 80%; */
+    width: 85%;
+}
+
+.nav-innerlinks {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: rgb(199, 71, 71); */
+}
+
+.nav-innerlinks ul {
+    height: 100%;
+    color: #a6a6a6;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    transform: scaleY(0.8);
+}
+
+.nav-viewall {
+    height: 100%;
+    width: 11%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: #d46868; */
+}
+.nav-viewall img {
+    width: 30%;
+}
+.navbar-line {
+    height: 45%;
+    border: solid 0.5px #a6a6a6;
+    color: #a6a6a6;
+}
+
+.nav-right-sec {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* background: rgb(179, 82, 82); */
+}
+
+.nav-search-box-container {
+    width: 38%;
+    height: 58%;
+    display: flex;
+    border-radius: 20px;
+    align-items: center;
+    background: rgb(0, 0, 0);
+    border: solid 2px #a6a6a6;
+}
+.nav-search-box-container img {
+    margin-left: 10px;
+    width: 18%;
+}
+
+.nav-searchbar {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding-left: 5px;
+    border-radius: 20px;
+    background: #000;
+    font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    outline: none;
+    transform: scaleY(0.8);
+    color: #a6a6a6;
+} 
+
+.nav-right-inner {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: goldenrod; */
+    gap: 15px;
+    color: #a6a6a6;
+    font-size: 16px;
+    margin-left: 10px;
+}
+.nav-right-inner p {
+    transform: scaleY(0.8);
+
+}
+.nav-right-inner img{
+    width: 12%;
+}
