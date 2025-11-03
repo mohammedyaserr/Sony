@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'SST';
+    src: url('../../assets/Fonts/SSTMediumCn.TTF');
+    src: url('../../assets/Fonts/SST-Roman.ttf');
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Home-notices-container {
+    width: 100%;
+    height: 240px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    background: #ffffff;
+}
+.Home-notices-inner {
+    width: 80%;
+    /* background: #d44e4e7e; */
+}
+.Home-notices-inner h1 {
+    font-size: 24px;
+    letter-spacing: px;
+    transform: scaleY(0.9);
+    font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #2f353d;
+}
+
+.home-notice-items-container {
+    width: 100%;
+    height: 60%;
+    margin-top: 35px;
+    /* background: gray; */
+}
+
+.home-notice {
+    width: 100%;
+    height: 35%;
+    padding: 0 5px 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: solid 1px #e4e7eb;
+    border-bottom: solid 1px #e4e7eb;
+    font-family: 'SST Roman', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    transform: scaleY(1.1);
+    color: #5e6165;
+    margin-top: 3px;
+    /* background: #d71d1d; */
+}
+.home-notice img {
+    width: 1.8%;
+    /* margin-right: 5px; */
+}
+.home-notice:hover{
+    background: #e8edf3;
+}
+
+.home-notice-show-more {
+    width: 100%;
+    height:30px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 1px;
+}
+.home-notice-show-more p {
+    font-size: 15px;
+    font-family: 'SST Roman', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #3865e0;
+}
+.home-notice-show-more img {
+    width: 1.5%;
+}
