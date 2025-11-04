@@ -1,0 +1,95 @@
+@font-face {
+  font-family: 'SST';
+  src: url('../../assets/Fonts/SSTMediumCn.TTF');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home-latest-container {
+  width: 100%;
+  height: 820px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* background: #000; */
+  color: #fff;
+  font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.home-latest-inner {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.home-latest-inner h2 {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+
+.home-latest-sliding-cards {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+  background: gray;
+}
+
+/* Each slide item */
+.slide-card {
+  background: #222;
+  /* border-radius: 10px; */
+  height: 480px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+/* .slide-card:hover {
+  background: #333;
+  transform: scale(1.05);
+} */
+
+/* React Slick arrow styles */
+.slick-prev:before,
+.slick-next:before {
+  color: white;
+  font-size: 28px;
+}
+
+.slick-prev {
+  left: -40px;
+}
+
+.slick-next {
+  right: -40px;
+}
+
+/* Dots styling */
+.slick-dots li button:before {
+  color: #bcbcca;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #31353d;
+  font-size: 18px;
+  /* opacity: 1; */
+}
