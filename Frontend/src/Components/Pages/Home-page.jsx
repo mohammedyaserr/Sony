@@ -4,6 +4,7 @@ import HomeBanner from '../Home-page/Home-Banner'
 import HomeNotices from '../Home-page/Home-Notices'
 import Homelatest from '../Home-page/Home-Latest'
 import Homepromotionsandoffers from '../Home-page/Home-promotions-and-offers'
+import Homerecentlyviewed from '../Home-page/Home-recently-viewed'
 
 const Homepage = () => {
   return (
@@ -13,6 +14,7 @@ const Homepage = () => {
       <HomeNotices/>
       <Homelatest/>
       <Homepromotionsandoffers/>
+      <Homerecentlyviewed/>
     </>
   )
 }
