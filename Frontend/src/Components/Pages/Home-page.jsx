@@ -5,6 +5,7 @@ import HomeNotices from '../Home-page/Home-Notices'
 import Homelatest from '../Home-page/Home-Latest'
 import Homepromotionsandoffers from '../Home-page/Home-promotions-and-offers'
 import Homerecentlyviewed from '../Home-page/Home-recently-viewed'
+import Homefootnotes from '../Home-page/Home-footnotes'
 
 const Homepage = () => {
   return (
@@ -15,6 +16,7 @@ const Homepage = () => {
       <Homelatest/>
       <Homepromotionsandoffers/>
       <Homerecentlyviewed/>
+      <Homefootnotes/>
     </>
   )
 }
