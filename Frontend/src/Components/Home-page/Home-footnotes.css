@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'SST';
+    src: url('../../assets/Fonts/Font 2/HelveticaNeueLight.otf');
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -17,7 +22,68 @@
     justify-content: end;
     align-items: center;
 }
+.home-footnote-inner1 p {
+    cursor: pointer;
+        color: #6b6b7b;
+        font-size: 13px;
+    font-family: SST W01 Roman, sans-serif, Helvetica Neue, Helvetica, Arial;
+}
+
+.home-footnote-inner-open {
+  transition: all 0.3s ease;
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.home-footnote-inner-open.open {
+    width: 100%;
+    height: 244.9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f2f5f9;
+}
+
+.home-footnote-inner-open-inner {
+    width: 80%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    color: #6b6b7b;
+    font-size: 13px;
+    /* background: gray; */
+    font-family: SST W01 Roman, sans-serif, Helvetica Neue, Helvetica, Arial;
+}
+.home-footnote-inner-open-inner p {
+    margin-left: 10px;
+
+}
+.home-footnote-inner-open-inner span {
+    font-weight: 700;
+}
 
 
+.home-footnote-inner-open-inner-2 {
+    width: 80%;
+    height: 200px;
+    padding-left: 9px;
+    /* background: rgb(133, 34, 34); */
+    color: #6b6b7b;
+    font-size: 13px;
+    font-family: SST W01 Roman, sans-serif, Helvetica Neue, Helvetica, Arial;
+}
+
+.footnote-list li::marker {
+  content: "*";   
+  color: black; 
+  line-height: 40px;   
+}
+
+.test {
+    margin-left: 15px;
+}
 
 
