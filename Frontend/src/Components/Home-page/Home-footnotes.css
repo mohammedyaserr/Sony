@@ -3,7 +3,7 @@
     src: url('../../assets/Fonts/Font 2/HelveticaNeueLight.otf');
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,19 +22,20 @@
     justify-content: end;
     align-items: center;
 }
+
 .home-footnote-inner1 p {
     cursor: pointer;
-        color: #6b6b7b;
-        font-size: 13px;
+    color: #6b6b7b;
+    font-size: 13px;
     font-family: SST W01 Roman, sans-serif, Helvetica Neue, Helvetica, Arial;
 }
 
 .home-footnote-inner-open {
-  transition: all 0.3s ease;
-  height: 0;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
+    transition: all 0.3s ease;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .home-footnote-inner-open.open {
@@ -58,10 +59,12 @@
     /* background: gray; */
     font-family: SST W01 Roman, sans-serif, Helvetica Neue, Helvetica, Arial;
 }
+
 .home-footnote-inner-open-inner p {
     margin-left: 10px;
 
 }
+
 .home-footnote-inner-open-inner span {
     font-weight: 700;
 }
@@ -78,13 +81,11 @@
 }
 
 .footnote-list li::marker {
-  content: "*";   
-  color: black; 
-  line-height: 40px;   
+    content: "*";
+    color: black;
+    line-height: 40px;
 }
 
 .test {
     margin-left: 15px;
 }
-
-
