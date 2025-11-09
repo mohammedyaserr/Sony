@@ -16,7 +16,9 @@ const Homefooter = () => {
                             </div>
 
                             <div className="home-footer-container-inner1-search">
-
+                                {/* <img src="" alt="" /> */}
+                                <input type="text" />
+                                <button>Search</button>
                             </div>
                             <p className='home-footer-loc-para'>See Our Locations</p>
                         </div>
