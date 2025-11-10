@@ -100,7 +100,7 @@ const Homefooter = () => {
                             <p>PRIVACY POLICY</p>
                         </div>
                         <img src={footerbarandlogo} alt="" />
-                        <p>Copyright © 2025 Sony India. All rights reserved</p>
+                        <p className='home-footer-copyright-sec'>Copyright © 2025 Sony India. All rights reserved</p>
                     </div>
 
                 </div>

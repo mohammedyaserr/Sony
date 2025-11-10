@@ -194,14 +194,18 @@
     display: flex;
     gap: 20px;
     font-size: 13px;
-    color: #878792;
+    color: #f1f1f1;
+    font-weight: 700;
     font-family: 'SST', sans-serif;
     transform: scaleX(1);
+    transform: scaleY(0.9);
+    margin-bottom: 10px;
 }
 .home-footer-container-inner3 img {
-    width: 30%;
+    width: 28%;
+    margin-bottom: 5px;
 }
-.home-footer-container-inner3 p {
+.home-footer-copyright-sec {
     color: #878792;
     font-size: 11px;
     font-family: SST W01 Roman, sans-serif, Helvetica Neue, Helvetica, Arial;
