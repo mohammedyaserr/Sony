@@ -31,7 +31,7 @@
 }
 
 .home-footnote-inner-open {
-    transition: all 0.3s ease;
+    /* transition: all 0.3s ease; */
     height: 0;
     overflow: hidden;
     display: flex;
