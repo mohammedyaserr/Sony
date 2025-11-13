@@ -1,7 +1,5 @@
 import React from "react";
-import Slider from "react-slick"; 
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 import "./Home-latest.css";
 
@@ -13,14 +11,15 @@ import slideimg5 from '../../assets/Karan_Master KV_760x960.webp'
 import slideimg6 from '../../assets/Karan_Master KV_760x960.webp'
 
 const Homelatest = () => {
+  
   const settings = {
     dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,        
+    infinite: true,
+    slidesToShow: 3,
     slidesToScroll: 1,
-    arrows: true,          
-
+    autoplay: true,
+    autoplaySpeed: 2000,
+    rtl: true
   };
 
   return (
@@ -29,7 +28,9 @@ const Homelatest = () => {
         <h2>THE LATEST</h2>
 
         <div className="home-latest-sliding-cards">
-          <Slider {...settings}>
+          <Slider className="slider-tab" {...settings}>
+
+
             <div className="home-slide-card-1">
                 <div className="home-slide-card-inner">
                   <h3>BRAVIA 5 | XR55A</h3>
