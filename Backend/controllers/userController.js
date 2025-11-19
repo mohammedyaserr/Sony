@@ -1,9 +1,9 @@
 import db from '../config/db.js'
 
 export const addUsers = ((req,res) => {
-    const {name, number, pass} = req.body;
+    const {name, num, pass} = req.body;
 
-    const values = [name, pass,number];
+    const values = [name, pass,num];
         console.log(values,"values");
         
     const sql = "INSERT INTO users (name, pass, num) values (?,?,?)";
