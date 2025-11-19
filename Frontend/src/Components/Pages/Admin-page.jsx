@@ -1,14 +1,13 @@
 import React from 'react'
-import Adminnav from '../Admin-page/Admin-nav'
-import MiniDrawer from '../Admin-page/Admin-nav'
-import ResponsiveDrawer from '../Admin-page/Admin-nav'
+
+import Dashboard from '../Admin-page/Admin-Dash'
 
 const Adminpage = () => {
   return (
     <>
-      {/* <Adminnav/> */}
+      <Dashboard/>
 
-      <ResponsiveDrawer/>
+      {/* <ResponsiveDrawer/> */}
     </>
   )
 }

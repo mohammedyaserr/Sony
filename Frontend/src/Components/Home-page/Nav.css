@@ -129,6 +129,7 @@
     color: #a6a6a6;
     font-size: 16px;
     margin-left: 10px;
+    cursor: pointer;
 }
 .nav-right-inner p {
     font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -137,4 +138,54 @@
 }
 .nav-right-inner img{
     width: 12%;
+}
+
+
+
+
+
+
+
+.mysony-popup {
+    margin-top: 10px;
+  position: absolute;
+  top: 65px; /* Exactly below the navbar */
+  right: 8%;
+  width: 200px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  z-index: 9999;
+  animation: dropdown 0.2s ease-out;
+}
+
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.mysony-popup h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-family: 'SST';
+  color: #000;
+}
+
+.popup-item {
+  padding: 8px 0;
+  font-size: 14px;
+  font-family: 'SST';
+  color: #333;
+  cursor: pointer;
+}
+
+.popup-item:hover {
+  color: #0072ce;
 }

@@ -20,3 +20,8 @@ export const addUsers = ((req,res) => {
         }
     })
 })
+
+
+export const deluser = ((req,res)=>{
+    
+})

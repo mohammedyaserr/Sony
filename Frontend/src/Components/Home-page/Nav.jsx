@@ -1,13 +1,29 @@
-import React from 'react'
-import './Nav.css'
+import React, { useState, useEffect, useRef } from 'react';
+import './Nav.css';
 
-import navlogo from '../../assets/sony-nav-logo.svg'
-import navsearch from '../../assets/magnifying-glass.png'
-import downarrow from '../../assets/down-arrow.png'
-import navwishlist from '../../assets/heart (1).png'
-import navuser from '../../assets/user (1).png'
+import navlogo from '../../assets/sony-nav-logo.svg';
+import navsearch from '../../assets/magnifying-glass.png';
+import downarrow from '../../assets/down-arrow.png';
+import navwishlist from '../../assets/heart (1).png';
+import navuser from '../../assets/user (1).png';
 
 const Nav = () => {
+
+    const [showPopup, setShowPopup] = useState(false);
+    const popupRef = useRef(null);
+
+    // Close popup when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (popupRef.current && !popupRef.current.contains(e.target)) {
+                setShowPopup(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     return (
         <>
             <div className="nav-container">
@@ -26,12 +42,12 @@ const Nav = () => {
                             <li>Cloud Service</li>
                             <li>Car Audio</li>
 
-                                <div className="nav-viewall">
-                                    <li>View All</li>
-                                    <img src={downarrow} alt="" />
-                                </div>
+                            <div className="nav-viewall">
+                                <li>View All</li>
+                                <img src={downarrow} alt="" />
+                            </div>
 
-                                <hr className='navbar-line'/>
+                            <hr className='navbar-line' />
                             <li>Support</li>
                         </ul>
                     </div>
@@ -43,16 +59,29 @@ const Nav = () => {
                             <input className='nav-searchbar' type="text" placeholder='Search' />
                         </div>
 
-                        <div className="nav-right-inner">
+                        <div
+                            className="nav-right-inner" >
                             <img src={navwishlist} alt="" />
                             <img src={navuser} alt="" />
-                            <p>My Sony</p>
+                            <p onClick={() => setShowPopup(!showPopup)}>My Sony</p>
                         </div>
+
                     </div>
                 </div>
             </div>
-        </>
-    )
-}
 
-export default Nav
+            {/* -------- POPUP BELOW MY SONY -------- */}
+            {showPopup && (
+                <div className="mysony-popup" ref={popupRef}>
+                    <h4>Account</h4>
+                    <p className="popup-item">Login</p>
+                    <p className="popup-item">Register</p>
+                    <p className="popup-item">Orders</p>
+                    <p className="popup-item">Wishlist</p>
+                </div>
+            )}
+        </>
+    );
+};
+
+export default Nav;
