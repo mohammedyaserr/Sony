@@ -6,10 +6,10 @@ import db from '../config/db.js'
 export const addUsers = ((req,res) => {
     const {name, email, num, pass} = req.body;
 
-    const values = [name, email, num, pass, usertype];
+    const values = [name, email, num, pass,];
         console.log(values,"values");
         
-    const sql = "INSERT INTO users (name, email, pass, num) values (?,?,?)";
+    const sql = "INSERT INTO users (name, email, pass, num) values (?,?,?,?)";
 
     db.query(sql, values , (error,result) => {
         if (error) {

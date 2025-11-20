@@ -1,12 +1,12 @@
 import db from '../config/db.js'
 
 export const loginUser = ((req, res) => {
-    const { name, pass } = req.body;
+    const { email, pass } = req.body;
 
-    const values = [name, pass];
+    const values = [email, pass];
     console.log(values, "login values");
 
-    const sql = "SELECT * FROM users WHERE name = ? AND pass = ?";
+    const sql = "SELECT * FROM users WHERE email = ? AND pass = ?";
 
     db.query(sql, values, (error, result) => {
         if (error) {
@@ -22,7 +22,7 @@ export const loginUser = ((req, res) => {
             });
         } else {
             // no user found
-            return res.status(401).json("invalid credentials");
+            return res.status(404).json("invalid credentials");
         }
     });
 });
