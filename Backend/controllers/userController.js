@@ -1,12 +1,15 @@
 import db from '../config/db.js'
 
-export const addUsers = ((req,res) => {
-    const {name, num, pass} = req.body;
 
-    const values = [name, pass,num];
+// ------------------------ add user to db ------------------------
+
+export const addUsers = ((req,res) => {
+    const {name, email, num, pass} = req.body;
+
+    const values = [name, email, num, pass, usertype];
         console.log(values,"values");
         
-    const sql = "INSERT INTO users (name, pass, num) values (?,?,?)";
+    const sql = "INSERT INTO users (name, email, pass, num) values (?,?,?)";
 
     db.query(sql, values , (error,result) => {
         if (error) {
@@ -22,6 +25,19 @@ export const addUsers = ((req,res) => {
 })
 
 
-export const deluser = ((req,res)=>{
+
+// ------------------------ get users from db ------------------------
+
+
+export const listuser = ((req,res)=>{
     
+    db.query("SELECT * FROM users",(error,result) => {
+        if(error) {
+            console.log(error);
+            res.status(500).json("server error")
+        }else{
+            res.status(200).json(result,"success")
+            // console.log(result);           
+        }
+    })
 })

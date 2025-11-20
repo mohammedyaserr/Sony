@@ -12,8 +12,9 @@ const Signup = () => {
 
     const [userdata, setUserdata] = useState({
       name:'',
-      pass:'',
-      num:''
+      email:'',
+      num:'',
+      pass:''
     })
 
     console.log(userdata);
@@ -52,6 +53,11 @@ const Signup = () => {
           </div>
 
           <div className="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="Enter you email" name="email" value={userdata.email} onChange={handlechange}/>
+          </div>
+
+          <div className="input-group">
             <label>Number</label>
             <input type="number" placeholder="Enter your mobile number" name="num" value={userdata.num} onChange={handlechange}/>
           </div>
@@ -61,10 +67,6 @@ const Signup = () => {
             <input type="password" placeholder="Create a password" name="pass" value={userdata.pass} onChange={handlechange} />
           </div>
 
-          {/* <div className="input-group">
-            <label>Confirm Password</label>
-            <input type="password" placeholder="Re-enter password" />
-          </div> */}
 
           <button className="signup-btn" onClick={handlesignup}>Sign Up</button>
         </form>

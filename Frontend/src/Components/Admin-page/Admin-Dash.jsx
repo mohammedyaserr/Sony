@@ -1,12 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
+import axios from "axios";
 
 const Dashboard =()=> {
+
+  const url = import.meta.env.VITE_APP_URL;
+
+
   // Only popup open/close state
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
+  const [userslist , setUserslist] = useState([]);
+
+  useEffect(()=>{
+    fetchuserslist()
+  },[]);
+
+  const fetchuserslist = async () => {
+    try {
+      const response = await axios.get(`${url}/user/listuser`);
+      setUserslist(response.data)
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+
+  console.log(userslist);
+  
+
+
+
   return (
+
     <div className="dashboard">
       <aside className="sidebar">
         <h2>Admin</h2>
@@ -25,7 +53,7 @@ const Dashboard =()=> {
         </nav>
 
         <section className="stats">
-          <div className="card">Total Users: 2</div>
+          <div className="card">Total Users {userslist.length}</div>
         </section>
 
         <div className="add-user-container">
@@ -33,7 +61,9 @@ const Dashboard =()=> {
             + Add User
           </button>
         </div>
-
+        {userslist.map((list)=>{
+          
+        })}
         <section className="table-section">
           <table className="user-table">
             <thead>
@@ -41,17 +71,21 @@ const Dashboard =()=> {
                 <th>SL No.</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Number</th>
                 <th>Pass</th>
                 <th>Action</th>
               </tr>
             </thead>
 
-            <tbody>
+            {userslist.map((list)=>{
+                return (
+                  <tbody>
               <tr>
-                <td>1</td>
-                <td>Mohammed</td>
-                <td>mohammed@example.com</td>
-                <td>yyy</td>
+                <td>{list.idusers}</td>
+                <td>{list.name}</td>
+                <td>{list.email}</td>
+                <td>{list.num}</td>
+                <td>{list.pass}</td>
                 <td>
                   <button className="edit-btn" onClick={() => setShowEdit(true)}>
                     Edit
@@ -60,19 +94,11 @@ const Dashboard =()=> {
                 </td>
               </tr>
 
-              <tr>
-                <td>2</td>
-                <td>Aisha</td>
-                <td>aisha@example.com</td>
-                <td>test</td>
-                <td>
-                  <button className="edit-btn" onClick={() => setShowEdit(true)}>
-                    Edit
-                  </button>
-                  <button className="delete-btn">Delete</button>
-                </td>
-              </tr>
             </tbody>
+                )
+            })}
+
+            
           </table>
         </section>
       </main>
@@ -112,6 +138,7 @@ const Dashboard =()=> {
             <form>
               <input type="text" placeholder="Name" />
               <input type="email" placeholder="Email" />
+              <input type="number" placeholder="Mobile Number" />
               <input type="password" placeholder="Password" />
 
               <div className="popup-buttons">
