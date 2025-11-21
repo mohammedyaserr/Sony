@@ -1,40 +1,81 @@
 import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Dashboard =()=> {
+const Dashboard = () => {
 
   const url = import.meta.env.VITE_APP_URL;
 
-
-  // Only popup open/close state
   const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
+  const [showEdit, setShowEdit] = useState(false)
 
-  const [userslist , setUserslist] = useState([]);
 
-  useEffect(()=>{
-    fetchuserslist()
-  },[]);
+  const [userslist, setUserslist] = useState([]);
 
-  const fetchuserslist = async () => {
+
+  const fetchuserslist = async (e) => {
     try {
       const response = await axios.get(`${url}/user/listuser`);
-      setUserslist(response.data)
+      setUserslist(response.data);
     } catch (error) {
       console.log(error);
-      
     }
+  };
+
+  // useEffect(() => {
+  //   fetchuserslist();
+  // },[]);
+
+  console.log(userslist);
+
+
+  const [adduser, setAdduser] = useState({
+    name: '',
+    email: '',
+    num: '',
+    pass: '',
+    usertype: '',
+  });
+
+  console.log(adduser);
+
+
+  const handlechange = (e) => {
+    setAdduser({ ...adduser, [e.target.name]: e.target.value })
   }
 
 
-  console.log(userslist);
-  
 
+  const handleadduser = async () => {
+    // e.preventDefault()
+    setShowAdd(false)
+
+    try {
+      const response = await axios.post(`${url}/user/adduser`, adduser);
+      if (response.status === 200) {
+        alert("user added successfully");
+        fetchuserslist();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchuserslist();
+  }, []);
+
+
+
+//  ---------------- delete user ----------------
+
+const handledelete = async () =>{
+  const responce = await axios.delete()
+}
 
 
   return (
-
     <div className="dashboard">
       <aside className="sidebar">
         <h2>Admin</h2>
@@ -52,6 +93,7 @@ const Dashboard =()=> {
           <div className="profile">👤 Admin</div>
         </nav>
 
+
         <section className="stats">
           <div className="card">Total Users {userslist.length}</div>
         </section>
@@ -61,9 +103,7 @@ const Dashboard =()=> {
             + Add User
           </button>
         </div>
-        {userslist.map((list)=>{
-          
-        })}
+
         <section className="table-section">
           <table className="user-table">
             <thead>
@@ -77,28 +117,34 @@ const Dashboard =()=> {
               </tr>
             </thead>
 
-            {userslist.map((list)=>{
-                return (
-                  <tbody>
-              <tr>
-                <td>{list.idusers}</td>
-                <td>{list.name}</td>
-                <td>{list.email}</td>
-                <td>{list.num}</td>
-                <td>{list.pass}</td>
-                <td>
-                  <button className="edit-btn" onClick={() => setShowEdit(true)}>
-                    Edit
-                  </button>
-                  <button className="delete-btn">Delete</button>
-                </td>
-              </tr>
-
+            <tbody>
+              {userslist.length > 0 ? (
+                userslist.map((list, index) => (
+                  <tr key={list.idusers || index}>
+                    <td>{index + 1}</td>
+                    <td>{list.name}</td>
+                    <td>{list.email}</td>
+                    <td>{list.num}</td>
+                    <td>{list.pass}</td>
+                    <td>
+                      <button
+                        className="edit-btn"
+                        onClick={() => setShowEdit(true)}
+                      >
+                        Edit
+                      </button>
+                      <button className="delete-btn">Delete</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
+                    No users found
+                  </td>
+                </tr>
+              )}
             </tbody>
-                )
-            })}
-
-            
           </table>
         </section>
       </main>
@@ -109,12 +155,24 @@ const Dashboard =()=> {
           <div className="popup">
             <h3>Add User</h3>
             <form>
-              <input type="text" placeholder="Name" />
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
+              <input type="text" placeholder="Name" name="name" value={adduser.name} onChange={handlechange} />
+              <input type="email" placeholder="Email" name="email" value={adduser.email} onChange={handlechange} />
+              <input type="number" placeholder="Mobile Number" name="num" value={adduser.num} onChange={handlechange} />
+              <input type="password" placeholder="Password" name="pass" value={adduser.pass} onChange={handlechange} />
+
+
+              <select className="admin-select"
+                name="usertype"
+                value={adduser.usertype}
+                onChange={handlechange}
+              >
+                <option value="">Select User Type</option>
+                <option value="admin" >Admin</option>
+                <option value="user">User</option>
+              </select>
 
               <div className="popup-buttons">
-                <button type="button" className="save-btn">
+                <button type="button" className="save-btn" onClick={handleadduser}>
                   Save
                 </button>
                 <button
@@ -141,6 +199,13 @@ const Dashboard =()=> {
               <input type="number" placeholder="Mobile Number" />
               <input type="password" placeholder="Password" />
 
+              {/* Dropdown below password */}
+              <select className="admin-select">
+                <option value="">Select User Type</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+
               <div className="popup-buttons">
                 <button type="button" className="save-btn">
                   Save
@@ -159,6 +224,6 @@ const Dashboard =()=> {
       )}
     </div>
   );
-}
+};
 
 export default Dashboard;
