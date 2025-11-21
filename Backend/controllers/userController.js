@@ -9,7 +9,7 @@ export const addUsers = ((req,res) => {
     const values = [name, email, num, pass,];
         console.log(values,"values");
         
-    const sql = "INSERT INTO users (name, email, pass, num) values (?,?,?,?)";
+    const sql = "INSERT INTO users (name, email, num, pass) values (?,?,?,?)";
 
     db.query(sql, values , (error,result) => {
         if (error) {

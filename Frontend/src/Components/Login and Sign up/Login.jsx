@@ -13,10 +13,12 @@ const Login = () => {
     email:"",
     pass:"",
   })
-
+  
   const handlechange = (e) => {
     setLogindata ({...logindata , [e.target.name] : e.target.value})
   }
+  
+  const navigate = useNavigate();
 
   const handlelogin = async () => {
     try {
@@ -24,7 +26,10 @@ const Login = () => {
 
       if (response.status === 200) {
         alert("login success")
-        Navigate('/admindash')
+        navigate('/admindash')
+      }else{
+        alert("login as user")
+        navigate("/");
       }
     } catch (error) {
       alert("Incorrect email or Password")
@@ -34,7 +39,6 @@ const Login = () => {
 
   }
     
-  const Navigate = useNavigate();
 
   return (
     <div className="login-container">
@@ -54,7 +58,7 @@ const Login = () => {
         <button className="login-btn" onClick={handlelogin}>Login</button>
 
         <p className="signup-text">
-          Don’t have an account? <span onClick={() => Navigate('/signup')}>Sign up</span>
+          Don’t have an account? <span onClick={() => navigate('/signup')}>Sign up</span>
         </p>
       </div>
     </div>
