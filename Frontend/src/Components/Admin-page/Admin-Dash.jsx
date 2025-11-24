@@ -70,8 +70,12 @@ const Dashboard = () => {
 
 //  ---------------- delete user ----------------
 
-const handledelete = async () =>{
-  const responce = await axios.delete()
+const handledelete = async (id) =>{
+  const response = await axios.delete(`${url}/user/deleteuser/${id}`);
+  if (response.status === 200) {
+    alert("user Deleted Succesfully");
+    fetchuserslist();
+  }
 }
 
 
@@ -133,7 +137,7 @@ const handledelete = async () =>{
                       >
                         Edit
                       </button>
-                      <button className="delete-btn">Delete</button>
+                      <button className="delete-btn" onClick={ ()=>handledelete(list.idusers)}>Delete</button>
                     </td>
                   </tr>
                 ))
