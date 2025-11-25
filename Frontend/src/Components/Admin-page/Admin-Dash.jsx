@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [userslist, setUserslist] = useState([]);
 
 
-  const fetchuserslist = async (e) => {
+  const fetchuserslist = async () => {
     try {
       const response = await axios.get(`${url}/user/listuser`);
       setUserslist(response.data);
@@ -22,14 +22,11 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-
-  // useEffect(() => {
-  //   fetchuserslist();
-  // },[]);
-
+  
+  
   console.log(userslist);
-
-
+  
+  
   const [adduser, setAdduser] = useState({
     name: '',
     email: '',
@@ -67,16 +64,48 @@ const Dashboard = () => {
   }, []);
 
 
+// //  ---------------- Eidt user ----------------
 
-//  ---------------- delete user ----------------
+//   const [edituser , setEdituser] = useState({
+//     idusers:'',
+//     name:'',
+//     email:'',
+//     num:'',
+//     pass:'',
+//     usertype:''
+//   })
 
-const handledelete = async (id) =>{
-  const response = await axios.delete(`${url}/user/deleteuser/${id}`);
-  if (response.status === 200) {
-    alert("user Deleted Succesfully");
-    fetchuserslist();
+//   const handleedit = (e) =>{
+//     const {name, value} = e.target;
+//     setEdituser(prev => ({...prev, [name]: value}));
+//   };
+
+
+//   const handleupdateuser = async () =>{
+//     try {
+//       const response = await axios.put(`${url}/user/edituser`,edituser);
+//       if (response.status === 200) {
+//         alert("Edited Successfully");
+//         setShowEdit(false)
+//         fetchuserslist();
+//       }
+//     } catch (error) {
+//       console.log(error);
+      
+//     }
+//   }
+
+
+
+  //  ---------------- delete user ----------------
+
+  const handledelete = async (id) => {
+    const response = await axios.delete(`${url}/user/deleteuser/${id}`);
+    if (response.status === 200) {
+      alert("user Deleted Succesfully");
+      fetchuserslist();
+    }
   }
-}
 
 
   return (
@@ -133,11 +162,11 @@ const handledelete = async (id) =>{
                     <td>
                       <button
                         className="edit-btn"
-                        onClick={() => setShowEdit(true)}
+                        onClick={() => {setEdituser(list) ; setShowEdit(true)}}
                       >
                         Edit
                       </button>
-                      <button className="delete-btn" onClick={ ()=>handledelete(list.idusers)}>Delete</button>
+                      <button className="delete-btn" onClick={() => handledelete(list.idusers)}>Delete</button>
                     </td>
                   </tr>
                 ))
@@ -197,32 +226,35 @@ const handledelete = async (id) =>{
         <div className="popup-overlay">
           <div className="popup">
             <h3>Edit User</h3>
-            <form>
-              <input type="text" placeholder="Name" />
-              <input type="email" placeholder="Email" />
-              <input type="number" placeholder="Mobile Number" />
-              <input type="password" placeholder="Password" />
 
-              {/* Dropdown below password */}
-              <select className="admin-select">
-                <option value="">Select User Type</option>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
+          
+                <form>
+                  <input type="text" placeholder="Name"/>
+                  <input type="email" placeholder="Email"/>
+                  <input type="number" placeholder="Mobile Number"/>
+                  <input type="text" placeholder="Password"/>
 
-              <div className="popup-buttons">
-                <button type="button" className="save-btn">
-                  Save
-                </button>
-                <button
-                  type="button"
-                  className="cancel-btn"
-                  onClick={() => setShowEdit(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+                  {/* Dropdown below password */}
+                  <select className="admin-select">
+                    <option value="">Select User Type</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </select>
+
+                  <div className="popup-buttons">
+                    <button type="button" className="save-btn">
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="cancel-btn"
+                      onClick={() => setShowEdit(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+
           </div>
         </div>
       )}

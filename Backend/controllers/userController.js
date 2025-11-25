@@ -47,15 +47,29 @@ export const listuser = ((req,res)=>{
 // ------------------------ edited user data to table  ------------------------
 
 
-// export const  edituser = ((req,res) =>{
-//     const value 
-//     if (error) {
-//         console.log(error);
-//         res.status(500).json("server error")
-//     } else {
-        
-//     }
-// })
+export const edituser = (req, res) => {
+  const userid = req.params.id;
+
+  const { name, email, num, pass, usertype } = req.body;
+
+  const values = [name, email, num, pass, usertype, userid];
+
+  const sql = `
+    UPDATE users
+    SET name = ?, email = ?, num = ?, pass = ?, usertype = ?
+    WHERE idusers = ?
+  `;
+
+  db.query(sql, values, (error, result) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json("server error");
+    }
+
+    return res.status(200).json("Edited Successfully");
+  });
+};
+
 
 
 // ------------------------ delete from db ------------------------
