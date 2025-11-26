@@ -1,218 +1,289 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Dashboard.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-
-  const url = import.meta.env.VITE_APP_URL;
+  const url = import.meta.env.VITE_APP_URL || "";
 
   const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false)
-
+  const [showEdit, setShowEdit] = useState(false);
 
   const [userslist, setUserslist] = useState([]);
-
 
   const fetchuserslist = async () => {
     try {
       const response = await axios.get(`${url}/user/listuser`);
-      setUserslist(response.data);
+      setUserslist(response?.data || []);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch users:", error);
     }
   };
-  
-  
-  console.log(userslist);
-  
-  
+
+  // --------------- Add user ---------------
   const [adduser, setAdduser] = useState({
-    name: '',
-    email: '',
-    num: '',
-    pass: '',
-    usertype: '',
+    name: "",
+    email: "",
+    num: "",
+    pass: "",
+    usertype: "",
   });
 
-  console.log(adduser);
-
-
   const handlechange = (e) => {
-    setAdduser({ ...adduser, [e.target.name]: e.target.value })
-  }
+    const { name, value } = e.target;
+    setAdduser((prev) => ({ ...prev, [name]: value }));
+  };
 
-
-
-  const handleadduser = async () => {
-    // e.preventDefault()
-    setShowAdd(false)
-
+  const handleadduser = async (e) => {
+    e?.preventDefault?.();
     try {
       const response = await axios.post(`${url}/user/adduser`, adduser);
-      if (response.status === 200) {
-        alert("user added successfully");
+      if (response?.status >= 200 && response?.status < 300) {
+        alert("User added successfully");
+        setShowAdd(false);
+        setAdduser({ name: "", email: "", num: "", pass: "", usertype: "" });
         fetchuserslist();
+      } else {
+        console.warn("Add user responded with status:", response?.status);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Add user failed:", error);
+      alert("Failed to add user. See console for details.");
     }
-  }
+  };
 
   useEffect(() => {
     fetchuserslist();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // --------------- Edit user ---------------
+  const [edituser, setEdituser] = useState({
+    idusers: "",
+    name: "",
+    email: "",
+    num: "",
+    pass: "",
+    usertype: "",
+  });
 
-// //  ---------------- Eidt user ----------------
+  const handleedit = (e) => {
+    const { name, value } = e.target;
+    setEdituser((prev) => ({ ...prev, [name]: value }));
+  };
 
-//   const [edituser , setEdituser] = useState({
-//     idusers:'',
-//     name:'',
-//     email:'',
-//     num:'',
-//     pass:'',
-//     usertype:''
-//   })
-
-//   const handleedit = (e) =>{
-//     const {name, value} = e.target;
-//     setEdituser(prev => ({...prev, [name]: value}));
-//   };
-
-
-//   const handleupdateuser = async () =>{
-//     try {
-//       const response = await axios.put(`${url}/user/edituser`,edituser);
-//       if (response.status === 200) {
-//         alert("Edited Successfully");
-//         setShowEdit(false)
-//         fetchuserslist();
-//       }
-//     } catch (error) {
-//       console.log(error);
-      
-//     }
-//   }
-
-
-
-  //  ---------------- delete user ----------------
-
-  const handledelete = async (id) => {
-    const response = await axios.delete(`${url}/user/deleteuser/${id}`);
-    if (response.status === 200) {
-      alert("user Deleted Succesfully");
-      fetchuserslist();
+  const handleupdateuser = async (e) => {
+    e?.preventDefault?.();
+    try {
+      // Keep your backend's expected endpoint in mind — this uses JSON body
+      const response = await axios.put(`${url}/user/edituser`, edituser);
+      if (response?.status >= 200 && response?.status < 300) {
+        alert("Edited Successfully");
+        setShowEdit(false);
+        setEdituser({ idusers: "", name: "", email: "", num: "", pass: "", usertype: "" });
+        fetchuserslist();
+      } else {
+        console.warn("Update responded with status:", response?.status);
+      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      alert("Failed to update user. See console for details.");
     }
-  }
+  };
 
+  // --------------- delete user ---------------
+  const handledelete = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this user?");
+    if (!confirmed) return;
+    try {
+      const response = await axios.delete(`${url}/user/deleteuser/${id}`);
+      if (response?.status >= 200 && response?.status < 300) {
+        alert("User deleted successfully");
+        fetchuserslist();
+      } else {
+        console.warn("Delete responded with status:", response?.status);
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Failed to delete user. See console for details.");
+    }
+  };
+
+  // manage user - use consistent string values for pages
+  const [Activepage, SetActivepage] = useState("Users");
+
+  // ---------------- Product upload (multer) ----------------
+  // state for product upload
+  const [data, setData] = useState({
+    title: "",
+    img: null, // store File object
+  });
+
+  // ref for file input so we can clear it programmatically when needed
+  const fileInputRef = useRef(null);
+
+  const handlechange2 = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "img") {
+      setData((prev) => ({ ...prev, img: files && files[0] ? files[0] : null }));
+      console.log("Selected file:", files && files[0]);
+    } else {
+      setData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleupload = async () => {
+    try {
+      const form = new FormData();
+      form.append("title", data.title || "");
+      if (data.img) form.append("file", data.img);
+
+      const response = await axios.post(`${url}/product/addproduct`, form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (response?.status >= 200 && response?.status < 300) {
+        alert("Successfully uploaded image");
+        console.log(response?.data || response);
+        // reset local state and clear file input
+        setData({ title: "", img: null });
+        if (fileInputRef.current) fileInputRef.current.value = "";
+      } else {
+        console.warn("Upload responded with status:", response?.status);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Upload failed — check console.");
+    }
+  };
 
   return (
     <div className="dashboard">
       <aside className="sidebar">
         <h2>Admin</h2>
         <ul>
-          <li>Dashboard</li>
-          <li>Users</li>
-          <li>Reports</li>
-          <li>Settings</li>
+          <li onClick={() => SetActivepage("Dashboard")}>Dashboard</li>
+          <li onClick={() => SetActivepage("Users")}>Users</li>
+          <li onClick={() => SetActivepage("Reports")}>Reports</li>
+          <li onClick={() => SetActivepage("Products")}>Manage Products</li>
+          <li onClick={() => SetActivepage("Settings")}>Settings</li>
         </ul>
       </aside>
 
-      <main className="main">
-        <nav className="navbar">
-          <input type="text" placeholder="Search..." />
-          <div className="profile">👤 Admin</div>
-        </nav>
+      {Activepage === "Users" ? (
+        <main className="main">
+          <nav className="navbar">
+            <input type="text" placeholder="Search..." />
+            <div className="profile">👤 Admin</div>
+          </nav>
 
+          <section className="stats">
+            <div className="card">Total Users {userslist.length}</div>
+          </section>
 
-        <section className="stats">
-          <div className="card">Total Users {userslist.length}</div>
-        </section>
+          <div className="add-user-container">
+            <button className="add-btn" onClick={() => setShowAdd(true)}>
+              + Add User
+            </button>
+          </div>
 
-        <div className="add-user-container">
-          <button className="add-btn" onClick={() => setShowAdd(true)}>
-            + Add User
-          </button>
-        </div>
+          <section className="table-section">
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th>SL No.</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Number</th>
+                  <th>Pass</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
 
-        <section className="table-section">
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th>SL No.</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Number</th>
-                <th>Pass</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {userslist.length > 0 ? (
-                userslist.map((list, index) => (
-                  <tr key={list.idusers || index}>
-                    <td>{index + 1}</td>
-                    <td>{list.name}</td>
-                    <td>{list.email}</td>
-                    <td>{list.num}</td>
-                    <td>{list.pass}</td>
-                    <td>
-                      <button
-                        className="edit-btn"
-                        onClick={() => {setEdituser(list) ; setShowEdit(true)}}
-                      >
-                        Edit
-                      </button>
-                      <button className="delete-btn" onClick={() => handledelete(list.idusers)}>Delete</button>
+              <tbody>
+                {userslist.length > 0 ? (
+                  userslist.map((list, index) => (
+                    <tr key={list.idusers || index}>
+                      <td>{index + 1}</td>
+                      <td>{list.name}</td>
+                      <td>{list.email}</td>
+                      <td>{list.num}</td>
+                      <td>{list.pass}</td>
+                      <td>
+                        <button
+                          className="edit-btn"
+                          onClick={() => {
+                            // prefill edit form and open edit popup
+                            setEdituser({
+                              idusers: list.idusers || "",
+                              name: list.name || "",
+                              email: list.email || "",
+                              num: list.num || "",
+                              pass: list.pass || "",
+                              usertype: list.usertype || "",
+                            });
+                            setShowEdit(true);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button className="delete-btn" onClick={() => handledelete(list.idusers)}>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
+                      No users found
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
-                    No users found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </section>
-      </main>
+                )}
+              </tbody>
+            </table>
+          </section>
+        </main>
+      ) : (
+        <main className="main">
+          <h2 style={{ padding: "20px" }}>{Activepage}</h2>
+
+          {/* product upload: note — DO NOT pass `value` to file inputs */}
+          <input
+            type="text"
+            placeholder="Product name"
+            name="title"
+            onChange={handlechange2}
+            value={data.title}
+          />
+
+          <input type="file" name="img" ref={fileInputRef} onChange={handlechange2} />
+
+          <input type="button" value="submit" onClick={handleupload} />
+        </main>
+      )}
 
       {/* ---------------- ADD POPUP ---------------- */}
       {showAdd && (
         <div className="popup-overlay">
           <div className="popup">
             <h3>Add User</h3>
-            <form>
-              <input type="text" placeholder="Name" name="name" value={adduser.name} onChange={handlechange} />
-              <input type="email" placeholder="Email" name="email" value={adduser.email} onChange={handlechange} />
-              <input type="number" placeholder="Mobile Number" name="num" value={adduser.num} onChange={handlechange} />
+            <form onSubmit={handleadduser}>
+              <input type="text" placeholder="Name" name="name" value={adduser.name} onChange={handlechange} required />
+              <input type="email" placeholder="Email" name="email" value={adduser.email} onChange={handlechange} required />
+              <input type="tel" placeholder="Mobile Number" name="num" value={adduser.num} onChange={handlechange} />
               <input type="password" placeholder="Password" name="pass" value={adduser.pass} onChange={handlechange} />
 
-
-              <select className="admin-select"
-                name="usertype"
-                value={adduser.usertype}
-                onChange={handlechange}
-              >
+              <select className="admin-select" name="usertype" value={adduser.usertype} onChange={handlechange}>
                 <option value="">Select User Type</option>
-                <option value="admin" >Admin</option>
+                <option value="admin">Admin</option>
                 <option value="user">User</option>
               </select>
 
               <div className="popup-buttons">
-                <button type="button" className="save-btn" onClick={handleadduser}>
+                <button type="submit" className="save-btn">
                   Save
                 </button>
-                <button
-                  type="button"
-                  className="cancel-btn"
-                  onClick={() => setShowAdd(false)}
-                >
+                <button type="button" className="cancel-btn" onClick={() => setShowAdd(false)}>
                   Cancel
                 </button>
               </div>
@@ -226,35 +297,27 @@ const Dashboard = () => {
         <div className="popup-overlay">
           <div className="popup">
             <h3>Edit User</h3>
+            <form onSubmit={handleupdateuser}>
+              <input type="text" placeholder="Name" name="name" value={edituser.name ?? ""} onChange={handleedit} required />
+              <input type="email" placeholder="Email" name="email" value={edituser.email ?? ""} onChange={handleedit} required />
+              <input type="tel" placeholder="Mobile Number" name="num" value={edituser.num ?? ""} onChange={handleedit} />
+              <input type="text" placeholder="Password" name="pass" value={edituser.pass ?? ""} onChange={handleedit} />
 
-          
-                <form>
-                  <input type="text" placeholder="Name"/>
-                  <input type="email" placeholder="Email"/>
-                  <input type="number" placeholder="Mobile Number"/>
-                  <input type="text" placeholder="Password"/>
+              <select className="admin-select" name="usertype" value={edituser.usertype ?? ""} onChange={handleedit}>
+                <option value="">Select User Type</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
 
-                  {/* Dropdown below password */}
-                  <select className="admin-select">
-                    <option value="">Select User Type</option>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
-                  </select>
-
-                  <div className="popup-buttons">
-                    <button type="button" className="save-btn">
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      className="cancel-btn"
-                      onClick={() => setShowEdit(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
-
+              <div className="popup-buttons">
+                <button type="submit" className="save-btn">
+                  Save
+                </button>
+                <button type="button" className="cancel-btn" onClick={() => setShowEdit(false)}>
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
