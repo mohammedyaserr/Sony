@@ -235,9 +235,259 @@
   cursor: pointer;
 }
 
-/* Responsive (hide sidebar) */
-@media (max-width: 880px) {
-  .sidebar {
-    display: none;
-  }
+
+
+
+/* ---------- Manage Products: inputs + file + buttons ---------- */
+
+/* Target product form inputs in Products page (keeps same visual language) */
+.main section form input[type="text"],
+.main section form input[type="file"],
+.main section form button[type="submit"],
+.main section form input[type="text"]:focus,
+.main section form input[type="file"]:focus {
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d6dbe3;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  transition: box-shadow 160ms ease, border-color 160ms ease;
+}
+
+/* Text input specifics */
+.main section form input[type="text"] {
+  width: 100%;
+  max-width: 460px;
+  display: block;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+/* File input — style its button (modern browsers support ::file-selector-button) */
+.main section form input[type="file"] {
+  width: 100%;
+  max-width: 460px;
+  padding: 6px 12px;
+  background: #fff;
+  color: #333;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+/* Style the file button portion */
+.main section form input[type="file"]::file-selector-button {
+  margin-right: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+.main section form input[type="file"]::file-selector-button:hover {
+  transform: translateY(-1px);
+  background: #e6eef9;
+}
+
+/* Upload / action buttons */
+.main section form button[type="submit"],
+.products-grid .product-card button,
+.products-grid .product-card button:focus {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 6px 14px rgba(12, 20, 40, 0.06);
+}
+
+/* Primary (Upload) */
+.main section form button[type="submit"] {
+  background: linear-gradient(180deg,#0b6ef6,#005ecc);
+  color: #fff;
+  margin-top: 6px;
+}
+.main section form button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(11, 110, 246, 0.12);
+}
+
+/* Product card buttons container -> nicer spacing */
+.products-grid .product-card div {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+/* Edit and Delete buttons on cards (consistent with existing colors) */
+.products-grid .product-card button:first-child {
+  background: #0077ff;
+  color: #fff;
+}
+.products-grid .product-card button:first-child:hover {
+  background: #005fcc;
+  transform: translateY(-1px);
+}
+
+.products-grid .product-card button:last-child {
+  background: #d80032;
+  color: #fff;
+}
+.products-grid .product-card button:last-child:hover {
+  background: #b30026;
+  transform: translateY(-1px);
+}
+
+/* Make product cards visually consistent with popup cards */
+.products-grid .product-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 6px 20px rgba(16,24,40,0.04);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.products-grid .product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 36px rgba(16,24,40,0.08);
+}
+
+
+
+/* -------------------- Manage Products: form + buttons -------------------- */
+
+/* Prefer targeted class .product-form; fallback to main > section form */
+.product-form,
+.main section form {
+  background: transparent; /* you already have white wrapper via section padding */
+  padding: 12px 0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Text input (product name) */
+.product-form input[type="text"],
+.main section form input[type="text"] {
+  flex: 1 1 280px;
+  min-width: 200px;
+  padding: 10px 12px;
+  border: 1px solid #d6dbe3;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  box-shadow: inset 0 1px 2px rgba(16,24,40,0.03);
+}
+
+/* File input - nicer container */
+.product-form input[type="file"],
+.main section form input[type="file"] {
+  flex: 0 0 220px;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #fff;
+  border: 1px dashed #e3e7ed;
+  cursor: pointer;
+}
+
+/* Make file input visually smaller on mobile */
+@media (max-width: 520px) {
+  .product-form input[type="file"],
+  .main section form input[type="file"] { flex: 1 1 100%; }
+  .product-form input[type="text"],
+  .main section form input[type="text"] { flex: 1 1 100%; }
+}
+
+/* Primary action (Upload) */
+.product-form button[type="submit"],
+.main section form button[type="submit"],
+.product-form .btn-primary,
+.main section form .btn-primary {
+  background: linear-gradient(180deg, #0b1220 0%, #07101a 100%);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(11, 18, 32, 0.12);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
+}
+
+/* Hover/focus for primary */
+.product-form button[type="submit"]:hover,
+.main section form button[type="submit"]:hover,
+.product-form button[type="submit"]:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(11,18,32,0.14);
+}
+
+/* Secondary buttons inside cards (edit/delete) — keep consistent look) */
+.product-card button,
+.products-grid button {
+  padding: 8px 12px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform .08s ease, opacity .12s ease;
+}
+
+/* Edit button style */
+.product-card button:first-of-type,
+.products-grid button:first-of-type {
+  background: #0077ff;
+  color: #fff;
+}
+
+/* Delete button style */
+.product-card button:nth-of-type(2),
+.products-grid button:nth-of-type(2) {
+  background: #d80032;
+  color: #fff;
+}
+
+/* Small hover effect for card buttons */
+.product-card button:hover,
+.products-grid button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* Tidy product card layout if inline styles present */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* Product card buttons row */
+.product-card > div {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+/* Improve 'No image' placeholder */
+.product-card .no-image-placeholder {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg,#fbfdff,#f4f6f8);
+  color: #777;
+  border-radius: 6px;
+  border: 1px dashed #e6e9ee;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 900px) {
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
 }

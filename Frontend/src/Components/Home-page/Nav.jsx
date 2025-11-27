@@ -11,6 +11,7 @@ const Nav = () => {
 
     const [showPopup, setShowPopup] = useState(false);
     const popupRef = useRef(null);
+    // const navigate = useNavigate();
 
     // Close popup when clicking outside
     useEffect(() => {
@@ -23,6 +24,8 @@ const Nav = () => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    
 
     return (
         <>
