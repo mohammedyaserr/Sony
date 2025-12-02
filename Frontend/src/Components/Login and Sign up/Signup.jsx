@@ -15,7 +15,6 @@ const Signup = () => {
       email:'',
       num:'',
       pass:'',
-      usertype:''
     })
 
     console.log(userdata);

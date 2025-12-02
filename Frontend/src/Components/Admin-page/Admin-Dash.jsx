@@ -19,7 +19,7 @@ const Dashboard = () => {
     }
   };
 
-  // Add user state + handlers (unchanged)
+  // Add user state + handlers
   const [adduser, setAdduser] = useState({
     name: "",
     email: "",
@@ -27,10 +27,12 @@ const Dashboard = () => {
     pass: "",
     usertype: "",
   });
+
   const handlechange = (e) => {
     const { name, value } = e.target;
     setAdduser((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleadduser = async (e) => {
     e?.preventDefault?.();
     try {
@@ -58,19 +60,27 @@ const Dashboard = () => {
     pass: "",
     usertype: "",
   });
+
   const handleedit = (e) => {
     const { name, value } = e.target;
     setEdituser((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleupdateuser = async (e) => {
     e?.preventDefault?.();
     try {
-      // If your backend expects path param like /user/edituser/:id adjust accordingly
       const response = await axios.put(`${url}/user/edituser`, edituser);
       if (response?.status >= 200 && response?.status < 300) {
         alert("Edited Successfully");
         setShowEdit(false);
-        setEdituser({ idusers: "", name: "", email: "", num: "", pass: "", usertype: "" });
+        setEdituser({
+          idusers: "",
+          name: "",
+          email: "",
+          num: "",
+          pass: "",
+          usertype: "",
+        });
         fetchuserslist();
       } else {
         console.warn("Update responded with status:", response?.status);
@@ -94,34 +104,46 @@ const Dashboard = () => {
       }
     } catch (error) {
       console.error("Delete failed:", error);
-      alert("Failed to delete user. See console for details.");
+      alert("Failed to delete user");
     }
   };
 
   // ---------------- Active page ----------------
   const [Activepage, SetActivepage] = useState("Users");
 
-  // ---------------- Products ----------------
-  const [products, setProducts] = useState([]); // product list
-  // product form state for add
+
+
+
+// ================================================================================
+// ============================ Manage Product section ============================
+// ================================================================================
+
+const [products, setProducts] = useState([]);
+
   const [productForm, setProductForm] = useState({
     title: "",
+    description: "",
+    qnty: "",
+    brand: "",
+    catogery: "",
+    price: "",
     img: null,
   });
   const fileInputRef = useRef(null);
 
-  // product state for edit
+  console.log(productForm);
+
+
   const [productEdit, setProductEdit] = useState({
     id: "",
     title: "",
-    img: null, // new image if replaced
-    existingImageName: "", // optional, for UI/reference
+    img: null,
+    existingImageName: "",
   });
   const [showProductEdit, setShowProductEdit] = useState(false);
 
   const fetchProducts = async () => {
     try {
-      // expected endpoint: GET /product/listproduct
       const resp = await axios.get(`${url}/product/listproduct`);
       setProducts(resp?.data || []);
     } catch (err) {
@@ -135,11 +157,14 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // handle product form changes (add)
+
   const handleProductChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "img") {
-      setProductForm((prev) => ({ ...prev, img: files && files[0] ? files[0] : null }));
+      setProductForm((prev) => ({
+        ...prev,
+        img: files && files[0] ? files[0] : null,
+      }));
       console.log("Selected file:", files && files[0]);
     } else {
       setProductForm((prev) => ({ ...prev, [name]: value }));
@@ -152,6 +177,11 @@ const Dashboard = () => {
     try {
       const form = new FormData();
       form.append("title", productForm.title);
+      form.append("description", productForm.description);
+      form.append("qnty", productForm.qnty);
+      form.append("brand", productForm.brand);
+      form.append("catogery", productForm.catogery);
+      form.append("price", productForm.price);
       if (productForm.img) form.append("file", productForm.img);
 
       const response = await axios.post(`${url}/product/addproduct`, form, {
@@ -161,7 +191,15 @@ const Dashboard = () => {
       if (response?.status >= 200 && response?.status < 300) {
         alert("Product uploaded");
         // reset
-        setProductForm({ title: "", img: null });
+        setProductForm({
+          title: "",
+          description: "",
+          qnty: "",
+          brand: "",
+          catogery: "",
+          price: "",
+          img: null,
+        });
         if (fileInputRef.current) fileInputRef.current.value = "";
         fetchProducts();
       } else {
@@ -184,11 +222,14 @@ const Dashboard = () => {
     setShowProductEdit(true);
   };
 
-  // handle edit form change
+  
   const handleProductEditChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "img") {
-      setProductEdit((prev) => ({ ...prev, img: files && files[0] ? files[0] : null }));
+      setProductEdit((prev) => ({
+        ...prev,
+        img: files && files[0] ? files[0] : null,
+      }));
     } else {
       setProductEdit((prev) => ({ ...prev, [name]: value }));
     }
@@ -201,10 +242,8 @@ const Dashboard = () => {
       const form = new FormData();
       form.append("id", productEdit.id);
       form.append("title", productEdit.title);
-      // append new file only if user selected
       if (productEdit.img) form.append("file", productEdit.img);
 
-      // expected endpoint: PUT /product/editproduct
       const resp = await axios.put(`${url}/product/editproduct`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -227,7 +266,6 @@ const Dashboard = () => {
     const confirmed = window.confirm("Delete this product?");
     if (!confirmed) return;
     try {
-      // expected endpoint: DELETE /product/deleteproduct/:id
       const resp = await axios.delete(`${url}/product/deleteproduct/${id}`);
       if (resp?.status >= 200 && resp?.status < 300) {
         alert("Deleted");
@@ -240,6 +278,15 @@ const Dashboard = () => {
       alert("Delete failed — check console.");
     }
   };
+
+
+
+// ==================================================================================
+// ++++++++++++++++++++++++++ Manage Product section END ++++++++++++++++++++++++++++
+// ==================================================================================
+
+
+  
 
   return (
     <div className="dashboard">
@@ -310,7 +357,10 @@ const Dashboard = () => {
                         >
                           Edit
                         </button>
-                        <button className="delete-btn" onClick={() => handledelete(list.idusers)}>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handledelete(list.idusers)}
+                        >
                           Delete
                         </button>
                       </td>
@@ -318,7 +368,10 @@ const Dashboard = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>
+                    <td
+                      colSpan="6"
+                      style={{ textAlign: "center", padding: "20px" }}
+                    >
                       No users found
                     </td>
                   </tr>
@@ -334,57 +387,208 @@ const Dashboard = () => {
             <div className="profile">🧾 Products</div>
           </nav>
 
-          <section style={{ padding: "20px" }}>
-            <h3>Add Product</h3>
-            <form onSubmit={handleUploadProduct}>
-              <input
-                type="text"
-                placeholder="Product name"
-                name="title"
-                onChange={handleProductChange}
-                value={productForm.title}
-                required
-              />
-              <input
-                type="file"
-                name="img"
-                accept="image/*"
-                onChange={handleProductChange}
-                ref={fileInputRef}
-              />
-              <button type="submit">Upload</button>
-            </form>
-          </section>
 
-          <section style={{ padding: "20px" }}>
-            <h3>Products</h3>
-            {products.length === 0 ? (
-              <p>No products found</p>
-            ) : (
-              <div className="products-grid" style={{ display: "grid", gap: "12px", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))" }}>
-                {products.map((p, idx) => (
-                  <div key={p.id || p._id || idx} className="product-card" style={{ border: "1px solid #ddd", padding: "10px", borderRadius: "8px" }}>
-                    {/* adjust image url field name based on backend (here using p.image or p.imgUrl) */}
-                    {p.image || p.imgUrl ? (
-                      <img
-                        src={p.image || p.imgUrl}
-                        alt={p.title || p.name}
-                        style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }}
-                      />
-                    ) : (
-                      <div style={{ width: "100%", height: 140, display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5" }}>
-                        No image
-                      </div>
-                    )}
-                    <h4 style={{ margin: "8px 0 4px" }}>{p.title || p.name}</h4>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      <button onClick={() => openProductEdit(p)}>Edit</button>
-                      <button onClick={() => handleProductDelete(p.id || p._id || p.idproduct)}>Delete</button>
-                    </div>
-                  </div>
-                ))}
+
+
+
+          {/* ============================================================================= */}
+          {/* ----------  MANAGE PRODUCTS SECTION ---------- */}
+          {/* ============================================================================= */}
+
+
+
+
+          <section className="products-layout-modern">
+            {/* Left: Add product form */}
+            <div className="product-panel-modern product-panel-modern--form">
+              <div className="product-panel-modern-header">
+                <h3>Add Product</h3>
+                <p>
+                  Add a new product with full details, including category and description.
+                </p>
               </div>
-            )}
+
+              <form
+                className="product-form-modern"
+                onSubmit={handleUploadProduct}
+              >
+                {/* ROW 1: Title & Brand */}
+                <div className="product-form-row">
+                  <div className="product-form-field">
+                    <label>Title</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Sony Bravia X80J"
+                      name="title"
+                      value={productForm.title}
+                      onChange={handleProductChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="product-form-field">
+                    <label>Brand</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Sony"
+                      name="brand"
+                      value={productForm.brand}
+                      onChange={handleProductChange}
+                    />
+                  </div>
+                </div>
+
+                {/* ROW 2: Category, Quantity (qnty), Price */}
+                <div className="product-form-row">
+                  {/* NEW FIELD: Category */}
+                  <div className="product-form-field">
+                    <label>Category</label>
+                    <input
+                      type="text"
+                      placeholder="Ex: Electronics"
+                      name="catogery" // Matches state key
+                      value={productForm.catogery}
+                      onChange={handleProductChange}
+                    />
+                  </div>
+
+                  {/* UPDATED FIELD: Quantity (using name="qnty") */}
+                  <div className="product-form-field">
+                    <label>Quantity</label>
+                    <input
+                      type="number"
+                      placeholder="0"
+                      name="qnty" // <<-- UPDATED NAME
+                      min="0"
+                      value={productForm.qnty} // <<-- UPDATED VALUE
+                      onChange={handleProductChange}
+                    />
+                  </div>
+
+                  {/* Price */}
+                  <div className="product-form-field">
+                    <label>Price (₹)</label>
+                    <input
+                      type="number"
+                      placeholder="0.00"
+                      name="price"
+                      min="0"
+                      step="0.01"
+                      value={productForm.price}
+                      onChange={handleProductChange}
+                    />
+                  </div>
+                </div>
+
+                {/* ROW 3: Description (Full width) */}
+                <div className="product-form-row">
+                  <div className="product-form-field">
+                    <label>Description</label>
+                    <textarea
+                      placeholder="Enter a detailed description of the product..."
+                      name="description" // Matches state key
+                      rows="3"
+                      value={productForm.description}
+                      onChange={handleProductChange}
+                      // Optional styling to allow users to resize the text area vertically
+                      style={{
+                        resize: 'vertical',
+                        padding: '10px',
+                        border: '1px solid var(--border-color)',
+                        borderRadius: '6px'
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* ROW 4: Product Image */}
+                <div className="product-form-row">
+                  <div className="product-form-field">
+                    <label>Product Image</label>
+                    <input
+                      type="file"
+                      name="img"
+                      accept="image/*"
+                      onChange={handleProductChange}
+                      ref={fileInputRef}
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="btn-primary-modern">
+                  + Save Product
+                </button>
+              </form>
+            </div>
+
+            {/* Right: Products list */}
+            <div className="product-panel-modern product-panel-modern--list">
+              <div className="product-panel-modern-header">
+                <h3>Products</h3>
+                <span className="badge-pill-modern">
+                  Total: {products.length}
+                </span>
+              </div>
+
+              {products.length === 0 ? (
+                <p className="products-empty-modern">No products found.</p>
+              ) : (
+                <div className="products-grid-modern">
+                  {products.map((prtd) => (
+                    <div
+                      // key={p.id || p._id || idx}
+                      className="product-card-modern"
+                    >
+                      <div className="product-card-thumb-modern">
+                        {p.image || p.imgUrl ? (
+                          <img
+                            src={p.image || p.imgUrl}
+                            alt={p.title || p.name}
+                          />
+                        ) : (
+                          <span className="product-card-placeholder-modern">
+                            No image
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="product-card-body-modern">
+                        <h4 className="product-card-title-modern">
+                          {prtd.name}
+                        </h4>
+
+                        <p className="product-card-meta-modern">
+                          {p.brand ? `Brand: ${p.brand}` : "Brand: —"}
+                        </p>
+
+                        <div className="product-card-stats-modern">
+                          <span>Qty: {p.quantity ?? "—"}</span>
+                          <span className="product-card-price-modern">
+                            {p.price ? `₹ ${p.price}` : "₹ —"}
+                          </span>
+                        </div>
+
+                        <div className="product-card-actions-modern">
+                          <button onClick={() => openProductEdit(p)}>
+                            Edit
+                          </button>
+                          <button
+                            className="danger"
+                            onClick={() =>
+                              handleProductDelete(
+                                p.id || p._id || p.idproduct
+                              )
+                            }
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </section>
         </main>
       ) : (
@@ -399,18 +603,57 @@ const Dashboard = () => {
           <div className="popup">
             <h3>Add User</h3>
             <form onSubmit={handleadduser}>
-              <input type="text" placeholder="Name" name="name" value={adduser.name} onChange={handlechange} required />
-              <input type="email" placeholder="Email" name="email" value={adduser.email} onChange={handlechange} required />
-              <input type="tel" placeholder="Mobile Number" name="num" value={adduser.num} onChange={handlechange} />
-              <input type="password" placeholder="Password" name="pass" value={adduser.pass} onChange={handlechange} />
-              <select className="admin-select" name="usertype" value={adduser.usertype} onChange={handlechange}>
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={adduser.name}
+                onChange={handlechange}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={adduser.email}
+                onChange={handlechange}
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Mobile Number"
+                name="num"
+                value={adduser.num}
+                onChange={handlechange}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                name="pass"
+                value={adduser.pass}
+                onChange={handlechange}
+              />
+              <select
+                className="admin-select"
+                name="usertype"
+                value={adduser.usertype}
+                onChange={handlechange}
+              >
                 <option value="">Select User Type</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
               </select>
               <div className="popup-buttons">
-                <button type="submit" className="save-btn">Save</button>
-                <button type="button" className="cancel-btn" onClick={() => setShowAdd(false)}>Cancel</button>
+                <button type="submit" className="save-btn">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setShowAdd(false)}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
@@ -423,18 +666,57 @@ const Dashboard = () => {
           <div className="popup">
             <h3>Edit User</h3>
             <form onSubmit={handleupdateuser}>
-              <input type="text" placeholder="Name" name="name" value={edituser.name ?? ""} onChange={handleedit} required />
-              <input type="email" placeholder="Email" name="email" value={edituser.email ?? ""} onChange={handleedit} required />
-              <input type="tel" placeholder="Mobile Number" name="num" value={edituser.num ?? ""} onChange={handleedit} />
-              <input type="text" placeholder="Password" name="pass" value={edituser.pass ?? ""} onChange={handleedit} />
-              <select className="admin-select" name="usertype" value={edituser.usertype ?? ""} onChange={handleedit}>
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={edituser.name ?? ""}
+                onChange={handleedit}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={edituser.email ?? ""}
+                onChange={handleedit}
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Mobile Number"
+                name="num"
+                value={edituser.num ?? ""}
+                onChange={handleedit}
+              />
+              <input
+                type="text"
+                placeholder="Password"
+                name="pass"
+                value={edituser.pass ?? ""}
+                onChange={handleedit}
+              />
+              <select
+                className="admin-select"
+                name="usertype"
+                value={edituser.usertype ?? ""}
+                onChange={handleedit}
+              >
                 <option value="">Select User Type</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
               </select>
               <div className="popup-buttons">
-                <button type="submit" className="save-btn">Save</button>
-                <button type="button" className="cancel-btn" onClick={() => setShowEdit(false)}>Cancel</button>
+                <button type="submit" className="save-btn">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setShowEdit(false)}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
@@ -447,14 +729,36 @@ const Dashboard = () => {
           <div className="popup">
             <h3>Edit Product</h3>
             <form onSubmit={handleProductUpdate}>
-              <input type="text" placeholder="Product title" name="title" value={productEdit.title ?? ""} onChange={handleProductEditChange} required />
+              <input
+                type="text"
+                placeholder="Product title"
+                name="title"
+                value={productEdit.title ?? ""}
+                onChange={handleProductEditChange}
+                required
+              />
               <div style={{ margin: "8px 0" }}>
-                <small>Existing: {productEdit.existingImageName || "no image"}</small>
+                <small>
+                  Existing: {productEdit.existingImageName || "no image"}
+                </small>
               </div>
-              <input type="file" name="img" accept="image/*" onChange={handleProductEditChange} />
+              <input
+                type="file"
+                name="img"
+                accept="image/*"
+                onChange={handleProductEditChange}
+              />
               <div className="popup-buttons">
-                <button type="submit" className="save-btn">Save</button>
-                <button type="button" className="cancel-btn" onClick={() => setShowProductEdit(false)}>Cancel</button>
+                <button type="submit" className="save-btn">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setShowProductEdit(false)}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>

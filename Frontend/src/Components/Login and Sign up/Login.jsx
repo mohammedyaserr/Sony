@@ -21,23 +21,32 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handlelogin = async () => {
-    try {
-      const response = await axios.post(`${url}/auth/userlogin`,logindata);
+  try {
+    const response = await axios.post(`${url}/auth/userlogin`, logindata);
 
-      if (response.status === 200) {
-        alert("login success")
-        navigate('/admindash')
-      }else{
-        alert("login as user")
-        navigate("/");
+    if (response.status === 200) {
+
+      const user = response.data.user;          
+      const usertype = user.usertype;           
+
+      // ✅ store user in localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+
+      if (usertype === "admin") {
+        alert("Login as Admin");
+        navigate("/admindash");                 
+      } else {
+        alert("Login as User");
+        navigate("/");                         
       }
-    } catch (error) {
-      alert("Incorrect email or Password")
-      console.log(error);
-
     }
 
+  } catch (error) {
+    alert("Incorrect email or Password");
+    console.log(error);
   }
+};
+
     
 
   return (

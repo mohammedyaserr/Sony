@@ -18,6 +18,7 @@ export const loginUser = ((req, res) => {
             // user found
             return res.status(200).json({
                 message: "login success",
+                
                 user: result[0]
             });
         } else {

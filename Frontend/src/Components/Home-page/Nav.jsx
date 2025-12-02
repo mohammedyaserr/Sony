@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import './Nav.css';
 
 import navlogo from '../../assets/sony-nav-logo.svg';
@@ -10,8 +11,17 @@ import navuser from '../../assets/user (1).png';
 const Nav = () => {
 
     const [showPopup, setShowPopup] = useState(false);
+    const [username, setUsername] = useState("");   // ✅ NEW
     const popupRef = useRef(null);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+
+    // ✅ Get logged user on page load
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (storedUser) {
+            setUsername(storedUser.name);   // ✅ must match DB column name
+        }
+    }, []);
 
     // Close popup when clicking outside
     useEffect(() => {
@@ -25,7 +35,12 @@ const Nav = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    
+    // ✅ Logout function (optional but recommended)
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        navigate("/login");
+        window.location.reload();
+    };
 
     return (
         <>
@@ -62,11 +77,14 @@ const Nav = () => {
                             <input className='nav-searchbar' type="text" placeholder='Search' />
                         </div>
 
-                        <div
-                            className="nav-right-inner" >
+                        <div className="nav-right-inner">
                             <img src={navwishlist} alt="" />
                             <img src={navuser} alt="" />
-                            <p onClick={() => setShowPopup(!showPopup)}>My Sony</p>
+
+                            {/* ✅ SHOW USERNAME HERE */}
+                            <p onClick={() => setShowPopup(!showPopup)}>
+                                {username ? username : "My Sony"}
+                            </p>
                         </div>
 
                     </div>
@@ -77,10 +95,18 @@ const Nav = () => {
             {showPopup && (
                 <div className="mysony-popup" ref={popupRef}>
                     <h4>Account</h4>
-                    <p className="popup-item">Login</p>
-                    <p className="popup-item">Register</p>
-                    <p className="popup-item">Orders</p>
-                    <p className="popup-item">Wishlist</p>
+
+                    {!username ? (
+                        <>
+                            <p className="popup-item" onClick={() => navigate('/login')}>Login</p>
+                            <p className="popup-item" onClick={() => navigate('/signup')}>Register</p>
+                        </>
+                    ) : (
+                        <>
+                            <p className="popup-item">Orders</p>
+                            <p className="popup-item" onClick={handleLogout}>Logout</p>
+                        </>
+                    )}
                 </div>
             )}
         </>

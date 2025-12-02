@@ -1,493 +1,589 @@
-/* Layout */
+/* =========================================
+   1. GLOBAL VARIABLES & RESET
+   ========================================= */
+:root {
+  --primary-color: #4f46e5; /* Modern Indigo */
+  --primary-hover: #4338ca;
+  --danger-color: #ef4444;
+  --success-color: #10b981;
+  --bg-color: #f3f4f6;
+  --sidebar-bg: #1f2937;
+  --card-bg: #ffffff;
+  --text-main: #111827;
+  --text-light: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* =========================================
+   2. DASHBOARD LAYOUT (Sidebar + Main)
+   ========================================= */
 .dashboard {
   display: flex;
   height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f6f8;
+  background-color: var(--bg-color);
   overflow: hidden;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 220px;
-  background-color: #1e1e2f;
+  width: 250px;
+  background-color: var(--sidebar-bg);
   color: white;
-  padding: 20px;
-  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
 .sidebar h2 {
-  margin-bottom: 30px;
-  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #374151;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
 }
 
 .sidebar ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding-top: 20px;
 }
 
-.sidebar li {
-  margin: 12px 0;
+.sidebar ul li {
+  padding: 15px 25px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 6px;
+  transition: background 0.2s;
+  font-size: 0.95rem;
+  border-left: 4px solid transparent;
 }
 
-.sidebar li:hover {
-  background: rgba(255, 255, 255, 0.07);
+.sidebar ul li:hover {
+  background-color: #374151;
+  border-left-color: var(--primary-color);
 }
 
-/* Main layout */
+/* Main Content Area */
 .main {
   flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
 /* Navbar */
 .navbar {
+  background-color: var(--card-bg);
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
-  background-color: white;
-  border-bottom: 1px solid #e6e9ee;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .navbar input {
-  padding: 8px 10px;
-  width: 220px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
-
-.navbar input:focus {
-  outline: 3px solid rgba(0, 123, 255, 0.2);
+  padding: 8px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  width: 300px;
+  outline: none;
+  background-color: var(--bg-color);
 }
 
 .profile {
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
-/* Stats */
+/* =========================================
+   3. STATS & USERS TABLE
+   ========================================= */
 .stats {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
+  padding: 20px 30px;
 }
 
 .card {
-  background-color: white;
-  padding: 16px 20px;
+  background: var(--card-bg);
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-sm);
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color);
 }
 
-/* Add User Button */
 .add-user-container {
-  display: flex;
-  justify-content: flex-end;
-  margin: 12px 20px;
+  padding: 0 30px;
+  margin-bottom: 15px;
+  text-align: right;
 }
 
 .add-btn {
-  background: #0b1220;
+  background-color: var(--primary-color);
   color: white;
-  padding: 10px 18px;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(11, 18, 32, 0.12);
+  font-weight: 500;
 }
 
-.add-btn:hover {
-  background: #0f1724;
-}
-
-/* Table Section */
 .table-section {
-  padding: 0 20px 20px;
-  overflow: auto;
+  padding: 0 30px 30px 30px;
 }
 
 .user-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
-  min-width: 600px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .user-table th,
 .user-table td {
-  padding: 12px;
-  border: 1px solid #eee;
+  padding: 15px;
   text-align: left;
-  font-size: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.user-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-right: 5px;
 }
 
 .edit-btn {
-  background: #0077ff;
-  border: none;
-  padding: 6px 12px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.edit-btn:hover {
-  background: #005fcc;
+  background-color: #e0e7ff;
+  color: var(--primary-color);
 }
 
 .delete-btn {
-  background: #d80032;
-  border: none;
-  padding: 6px 12px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 8px;
+  background-color: #fee2e2;
+  color: var(--danger-color);
 }
 
-.delete-btn:hover {
-  background: #b30026;
-}
+/* =========================================
+   4. MODERN PRODUCT SECTION (UPDATED LAYOUT)
+   ========================================= */
 
-/* Popup Overlay */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.45);
+/* Layout Container: Vertical Stack (Form Top, List Bottom) */
+.products-layout-modern {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+  flex-direction: column; /* Changed from default row to column */
+  gap: 30px;
+  padding: 30px;
+  height: auto; /* Allow page to scroll naturally */
+  overflow-y: visible;
 }
 
-/* Popup Box */
-.popup {
-  background: #fff;
-  padding: 22px;
-  width: 360px;
-  max-width: calc(100% - 40px);
-  border-radius: 10px;
-  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.12);
-}
-
-.popup h3 {
-  margin-bottom: 12px;
-  font-size: 18px;
-}
-
-/* Inputs inside popup */
-.popup input,
-.popup select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border: 1px solid #d6dbe3;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.popup input:focus,
-.popup select:focus {
-  outline: 3px solid rgba(11, 122, 255, 0.2);
-}
-
-/* Dropdown styling */
-.admin-select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #d6dbe3;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
-/* Popup buttons */
-.popup-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.save-btn {
-  background: #0a8a46;
-  color: white;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.cancel-btn {
-  background: transparent;
-  border: 1px solid #bbb;
-  color: #333;
-  padding: 10px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-
-
-
-/* ---------- Manage Products: inputs + file + buttons ---------- */
-
-/* Target product form inputs in Products page (keeps same visual language) */
-.main section form input[type="text"],
-.main section form input[type="file"],
-.main section form button[type="submit"],
-.main section form input[type="text"]:focus,
-.main section form input[type="file"]:focus {
-  font-family: inherit;
-  font-size: 14px;
-  border-radius: 8px;
-  border: 1px solid #d6dbe3;
-  padding: 10px 12px;
-  box-sizing: border-box;
-  transition: box-shadow 160ms ease, border-color 160ms ease;
-}
-
-/* Text input specifics */
-.main section form input[type="text"] {
-  width: 100%;
-  max-width: 460px;
-  display: block;
-  margin-bottom: 12px;
-  background: #fff;
-}
-
-/* File input — style its button (modern browsers support ::file-selector-button) */
-.main section form input[type="file"] {
-  width: 100%;
-  max-width: 460px;
-  padding: 6px 12px;
-  background: #fff;
-  color: #333;
-  margin-bottom: 12px;
-  cursor: pointer;
-}
-
-/* Style the file button portion */
-.main section form input[type="file"]::file-selector-button {
-  margin-right: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  background: #f1f5f9;
-  cursor: pointer;
-  transition: transform 120ms ease, background 120ms ease;
-}
-.main section form input[type="file"]::file-selector-button:hover {
-  transform: translateY(-1px);
-  background: #e6eef9;
-}
-
-/* Upload / action buttons */
-.main section form button[type="submit"],
-.products-grid .product-card button,
-.products-grid .product-card button:focus {
-  border: none;
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  transition: transform 120ms ease, box-shadow 120ms ease;
-  box-shadow: 0 6px 14px rgba(12, 20, 40, 0.06);
-}
-
-/* Primary (Upload) */
-.main section form button[type="submit"] {
-  background: linear-gradient(180deg,#0b6ef6,#005ecc);
-  color: #fff;
-  margin-top: 6px;
-}
-.main section form button[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(11, 110, 246, 0.12);
-}
-
-/* Product card buttons container -> nicer spacing */
-.products-grid .product-card div {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-}
-
-/* Edit and Delete buttons on cards (consistent with existing colors) */
-.products-grid .product-card button:first-child {
-  background: #0077ff;
-  color: #fff;
-}
-.products-grid .product-card button:first-child:hover {
-  background: #005fcc;
-  transform: translateY(-1px);
-}
-
-.products-grid .product-card button:last-child {
-  background: #d80032;
-  color: #fff;
-}
-.products-grid .product-card button:last-child:hover {
-  background: #b30026;
-  transform: translateY(-1px);
-}
-
-/* Make product cards visually consistent with popup cards */
-.products-grid .product-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 12px;
-  box-shadow: 0 6px 20px rgba(16,24,40,0.04);
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-.products-grid .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 36px rgba(16,24,40,0.08);
-}
-
-
-
-/* -------------------- Manage Products: form + buttons -------------------- */
-
-/* Prefer targeted class .product-form; fallback to main > section form */
-.product-form,
-.main section form {
-  background: transparent; /* you already have white wrapper via section padding */
-  padding: 12px 0;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* Text input (product name) */
-.product-form input[type="text"],
-.main section form input[type="text"] {
-  flex: 1 1 280px;
-  min-width: 200px;
-  padding: 10px 12px;
-  border: 1px solid #d6dbe3;
-  border-radius: 8px;
-  font-size: 14px;
-  background: #fff;
-  box-shadow: inset 0 1px 2px rgba(16,24,40,0.03);
-}
-
-/* File input - nicer container */
-.product-form input[type="file"],
-.main section form input[type="file"] {
-  flex: 0 0 220px;
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 13px;
-  background: #fff;
-  border: 1px dashed #e3e7ed;
-  cursor: pointer;
-}
-
-/* Make file input visually smaller on mobile */
-@media (max-width: 520px) {
-  .product-form input[type="file"],
-  .main section form input[type="file"] { flex: 1 1 100%; }
-  .product-form input[type="text"],
-  .main section form input[type="text"] { flex: 1 1 100%; }
-}
-
-/* Primary action (Upload) */
-.product-form button[type="submit"],
-.main section form button[type="submit"],
-.product-form .btn-primary,
-.main section form .btn-primary {
-  background: linear-gradient(180deg, #0b1220 0%, #07101a 100%);
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 6px 18px rgba(11, 18, 32, 0.12);
-  transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
-}
-
-/* Hover/focus for primary */
-.product-form button[type="submit"]:hover,
-.main section form button[type="submit"]:hover,
-.product-form button[type="submit"]:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(11,18,32,0.14);
-}
-
-/* Secondary buttons inside cards (edit/delete) — keep consistent look) */
-.product-card button,
-.products-grid button {
-  padding: 8px 12px;
-  border-radius: 7px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  transition: transform .08s ease, opacity .12s ease;
-}
-
-/* Edit button style */
-.product-card button:first-of-type,
-.products-grid button:first-of-type {
-  background: #0077ff;
-  color: #fff;
-}
-
-/* Delete button style */
-.product-card button:nth-of-type(2),
-.products-grid button:nth-of-type(2) {
-  background: #d80032;
-  color: #fff;
-}
-
-/* Small hover effect for card buttons */
-.product-card button:hover,
-.products-grid button:hover {
-  transform: translateY(-2px);
-  opacity: 0.95;
-}
-
-/* Tidy product card layout if inline styles present */
-.product-card {
+/* Panels (White Cards) */
+.product-panel-modern {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: stretch;
+  width: 100%; /* Force full width */
 }
 
-/* Product card buttons row */
-.product-card > div {
+/* Form Panel Specifics */
+.product-panel-modern--form {
+  padding: 25px;
+  border-left: 5px solid var(--primary-color); /* Decorative accent */
+}
+
+/* List Panel Specifics */
+.product-panel-modern--list {
+  padding: 25px;
+  min-height: 400px; /* Ensure it has some height even if empty */
+}
+
+/* Headers */
+.product-panel-modern-header {
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
   display: flex;
-  gap: 8px;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Improve 'No image' placeholder */
-.product-card .no-image-placeholder {
+.product-panel-modern-header h3 {
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+.product-panel-modern-header p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-top: 5px;
+}
+
+/* Badge Pill */
+.badge-pill-modern {
+  background: #e0e7ff;
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* --- Form Styles (Optimized for Wide Layout) --- */
+.product-form-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-form-row {
+  display: flex;
+  gap: 20px; /* More space between columns */
   width: 100%;
-  height: 140px;
+}
+
+.product-form-field {
+  flex: 1; /* Distribute space equally */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-form-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.product-form-field input,
+.product-form-field textarea { /* <-- FIX FOR TEXTAREA/INPUT CONSISTENCY */
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%; 
+}
+
+.product-form-field input:focus,
+.product-form-field textarea:focus { /* <-- FIX FOR TEXTAREA/INPUT FOCUS */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  outline: none;
+}
+
+/* File Input Styling */
+.product-form-field input[type="file"] {
+  padding: 10px;
+  background: #f9fafb;
+}
+
+.btn-primary-modern {
+  align-self: flex-start; /* Button doesn't stretch full width */
+  padding: 12px 30px;
+  margin-top: 10px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary-modern:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary-modern:active {
+  transform: translateY(0);
+}
+
+/* --- Product Grid & Cards --- */
+.products-grid-modern {
+  display: grid;
+  /* Auto-fill will now use the full width of the screen to place items */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+.products-empty-modern {
+  text-align: center;
+  color: var(--text-light);
+  margin-top: 60px;
+  font-size: 1.1rem;
+}
+
+.product-card-modern {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-modern:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-card-thumb-modern {
+  height: 180px; /* Slightly taller images since cards are wider */
+  background: #f3f4f6;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg,#fbfdff,#f4f6f8);
-  color: #777;
-  border-radius: 6px;
-  border: 1px dashed #e6e9ee;
+  overflow: hidden;
+  border-bottom: 1px solid #f3f4f6;
 }
 
-/* Responsive grid adjustments */
-@media (max-width: 900px) {
-  .products-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.product-card-thumb-modern img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.product-card-modern:hover .product-card-thumb-modern img {
+  transform: scale(1.05);
+}
+
+.product-card-placeholder-modern {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.product-card-body-modern {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-card-title-modern {
+  font-size: 1.05rem;
+  margin-bottom: 5px;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card-meta-modern {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.product-card-stats-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: auto; /* Push to bottom of body */
+}
+
+.product-card-price-modern {
+  color: var(--success-color);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.product-card-actions-modern {
+  display: flex;
+  gap: 10px;
+}
+
+.product-card-actions-modern button {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.product-card-actions-modern button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.product-card-actions-modern button.danger {
+  color: var(--danger-color);
+  border-color: #fecaca;
+}
+
+.product-card-actions-modern button.danger:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+}
+
+/* =========================================
+   5. MODERN USER SECTION (New Styles)
+   ========================================= */
+
+/* Use the product panel for the user list container */
+.user-panel-modern--list {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 25px;
+  width: 100%;
+  /* Added to align with the main content padding */
+  margin: 0 30px 30px 30px; 
+}
+
+.user-panel-modern-header {
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-panel-modern-header h3 {
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+/* User Grid Layout (Mirrors Product Grid) */
+.users-grid-modern {
+  display: grid;
+  /* Uses three columns for user cards */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+/* User Card Styling */
+.user-card-modern {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-card-modern:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.user-card-header-modern {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.user-card-name-modern {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.user-card-type-modern {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Specific styling for Admin type */
+.user-card-type-modern.admin {
+    background: #fef3c7; /* Light yellow */
+    color: #b45309; /* Darker yellow/orange */
+}
+
+.user-card-detail-modern {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.user-card-detail-modern strong {
+  color: var(--text-main);
+  font-weight: 500;
+  margin-right: 5px;
+  width: 70px; /* Adjusted width for alignment */
+}
+
+.user-card-actions-modern {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Reusing existing button styles */
+.user-card-actions-modern button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.user-card-actions-modern .edit-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.user-card-actions-modern .edit-btn:hover {
+  background: var(--primary-hover);
+}
+
+.user-card-actions-modern .delete-btn {
+  background: #fee2e2;
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+}
+
+.user-card-actions-modern .delete-btn:hover {
+  background: #fca5a5;
+  color: white;
 }
