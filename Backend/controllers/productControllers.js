@@ -34,15 +34,15 @@ export const addproduct = ((req,res)=> {
 // ------------ fetch products from db ------------
 
 export const listproducts = ((req,res)=>{
-    const sql = "SELECT * FROM products"
+    // const sql = "SELECT * FROM products"
 
-    db.query(sql,(error,reuslt)=>{
+    db.query("SELECT * FROM products",(error,result)=>{
         if (error) {
             console.log(error);
             res.status(500).json("server error")
         } else {
             console.log("Success");
-            res.status(200).json("Products fetched successfully")
+            res.status(200).json(result)
         }
     })
 })

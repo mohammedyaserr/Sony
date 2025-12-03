@@ -1,9 +1,12 @@
 import express from 'express';
-import mysql from 'mysql2';
 import cors from 'cors'
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import productRoutes from './routes/productRoutes.js'
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+
 
 const app = express ()
 
@@ -14,6 +17,14 @@ app.use(cors())
 app.use("/api/auth",authRoutes)
 app.use("/api/user",userRoutes)
 app.use("/api/product",productRoutes)
+
+
+
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
+
+app.use('/api/uploads',express.static(path.join(_dirname, 'uploads')))
+
 
 
 const port = 8080;

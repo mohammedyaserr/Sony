@@ -92,7 +92,9 @@ const Dashboard = () => {
   };
 
   const handledelete = async (id) => {
-    const confirmed = window.confirm("Are you sure you want to delete this user?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
     if (!confirmed) return;
     try {
       const response = await axios.delete(`${url}/user/deleteuser/${id}`);
@@ -111,14 +113,14 @@ const Dashboard = () => {
   // ---------------- Active page ----------------
   const [Activepage, SetActivepage] = useState("Users");
 
+  // =====================================================================
+  // ============================ Manage Products ========================
+  // =====================================================================
 
 
 
-// ================================================================================
-// ============================ Manage Product section ============================
-// ================================================================================
 
-const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const [productForm, setProductForm] = useState({
     title: "",
@@ -129,10 +131,8 @@ const [products, setProducts] = useState([]);
     price: "",
     img: null,
   });
+
   const fileInputRef = useRef(null);
-
-  console.log(productForm);
-
 
   const [productEdit, setProductEdit] = useState({
     id: "",
@@ -144,8 +144,8 @@ const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
     try {
-      const resp = await axios.get(`${url}/product/listproduct`);
-      setProducts(resp?.data || []);
+      const resp = await axios.get(`${url}/product/listproducts`);
+      setProducts(resp.data || []);
     } catch (err) {
       console.error("Failed to fetch products:", err);
     }
@@ -157,7 +157,6 @@ const [products, setProducts] = useState([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   const handleProductChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "img") {
@@ -165,7 +164,6 @@ const [products, setProducts] = useState([]);
         ...prev,
         img: files && files[0] ? files[0] : null,
       }));
-      console.log("Selected file:", files && files[0]);
     } else {
       setProductForm((prev) => ({ ...prev, [name]: value }));
     }
@@ -190,7 +188,6 @@ const [products, setProducts] = useState([]);
 
       if (response?.status >= 200 && response?.status < 300) {
         alert("Product uploaded");
-        // reset
         setProductForm({
           title: "",
           description: "",
@@ -217,12 +214,11 @@ const [products, setProducts] = useState([]);
       id: p.id || p._id || p.idproduct || "",
       title: p.title || p.name || "",
       img: null,
-      existingImageName: p.image || p.filename || "",
+      existingImageName: p.img || p.image || p.filename || "",
     });
     setShowProductEdit(true);
   };
 
-  
   const handleProductEditChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "img") {
@@ -279,14 +275,9 @@ const [products, setProducts] = useState([]);
     }
   };
 
-
-
-// ==================================================================================
-// ++++++++++++++++++++++++++ Manage Product section END ++++++++++++++++++++++++++++
-// ==================================================================================
-
-
-  
+  // =====================================================================
+  // ============================== RENDER ================================
+  // =====================================================================
 
   return (
     <div className="dashboard">
@@ -302,6 +293,7 @@ const [products, setProducts] = useState([]);
       </aside>
 
       {Activepage === "Users" ? (
+        // ---------------- USERS PAGE ----------------
         <main className="main">
           <nav className="navbar">
             <input type="text" placeholder="Search..." />
@@ -381,22 +373,12 @@ const [products, setProducts] = useState([]);
           </section>
         </main>
       ) : Activepage === "Products" ? (
+        // ---------------- PRODUCTS PAGE ----------------
         <main className="main">
           <nav className="navbar">
             <input type="text" placeholder="Search products..." />
             <div className="profile">🧾 Products</div>
           </nav>
-
-
-
-
-
-          {/* ============================================================================= */}
-          {/* ----------  MANAGE PRODUCTS SECTION ---------- */}
-          {/* ============================================================================= */}
-
-
-
 
           <section className="products-layout-modern">
             {/* Left: Add product form */}
@@ -404,7 +386,8 @@ const [products, setProducts] = useState([]);
               <div className="product-panel-modern-header">
                 <h3>Add Product</h3>
                 <p>
-                  Add a new product with full details, including category and description.
+                  Add a new product with full details, including category and
+                  description.
                 </p>
               </div>
 
@@ -438,34 +421,31 @@ const [products, setProducts] = useState([]);
                   </div>
                 </div>
 
-                {/* ROW 2: Category, Quantity (qnty), Price */}
+                {/* ROW 2: Category, Quantity, Price */}
                 <div className="product-form-row">
-                  {/* NEW FIELD: Category */}
                   <div className="product-form-field">
                     <label>Category</label>
                     <input
                       type="text"
                       placeholder="Ex: Electronics"
-                      name="catogery" // Matches state key
+                      name="catogery"
                       value={productForm.catogery}
                       onChange={handleProductChange}
                     />
                   </div>
 
-                  {/* UPDATED FIELD: Quantity (using name="qnty") */}
                   <div className="product-form-field">
                     <label>Quantity</label>
                     <input
                       type="number"
                       placeholder="0"
-                      name="qnty" // <<-- UPDATED NAME
+                      name="qnty"
                       min="0"
-                      value={productForm.qnty} // <<-- UPDATED VALUE
+                      value={productForm.qnty}
                       onChange={handleProductChange}
                     />
                   </div>
 
-                  {/* Price */}
                   <div className="product-form-field">
                     <label>Price (₹)</label>
                     <input
@@ -480,22 +460,21 @@ const [products, setProducts] = useState([]);
                   </div>
                 </div>
 
-                {/* ROW 3: Description (Full width) */}
+                {/* ROW 3: Description */}
                 <div className="product-form-row">
                   <div className="product-form-field">
                     <label>Description</label>
                     <textarea
                       placeholder="Enter a detailed description of the product..."
-                      name="description" // Matches state key
+                      name="description"
                       rows="3"
                       value={productForm.description}
                       onChange={handleProductChange}
-                      // Optional styling to allow users to resize the text area vertically
                       style={{
-                        resize: 'vertical',
-                        padding: '10px',
-                        border: '1px solid var(--border-color)',
-                        borderRadius: '6px'
+                        resize: "vertical",
+                        padding: "10px",
+                        border: "1px solid var(--border-color)",
+                        borderRadius: "6px",
                       }}
                     />
                   </div>
@@ -536,47 +515,46 @@ const [products, setProducts] = useState([]);
                 <div className="products-grid-modern">
                   {products.map((prtd) => (
                     <div
-                      // key={p.id || p._id || idx}
                       className="product-card-modern"
+                      key={prtd.id || prtd.idproduct || prtd._id}
                     >
                       <div className="product-card-thumb-modern">
-                        {p.image || p.imgUrl ? (
+                        {prtd.img ? (
                           <img
-                            src={p.image || p.imgUrl}
-                            alt={p.title || p.name}
+                            src={`${url}/uploads/${prtd.img}`}
                           />
                         ) : (
                           <span className="product-card-placeholder-modern">
-                            No image
+                            Image
                           </span>
                         )}
                       </div>
 
                       <div className="product-card-body-modern">
                         <h4 className="product-card-title-modern">
-                          {prtd.name}
+                          {prtd.title}
                         </h4>
 
                         <p className="product-card-meta-modern">
-                          {p.brand ? `Brand: ${p.brand}` : "Brand: —"}
+                          Brand: {prtd.brand || "—"}
                         </p>
 
                         <div className="product-card-stats-modern">
-                          <span>Qty: {p.quantity ?? "—"}</span>
+                          <span>Qty: {prtd.qnty ?? "—"}</span>
                           <span className="product-card-price-modern">
-                            {p.price ? `₹ ${p.price}` : "₹ —"}
+                            {prtd.price ? `₹ ${prtd.price}` : "₹ —"}
                           </span>
                         </div>
 
                         <div className="product-card-actions-modern">
-                          <button onClick={() => openProductEdit(p)}>
+                          <button onClick={() => openProductEdit(prtd)}>
                             Edit
                           </button>
                           <button
                             className="danger"
                             onClick={() =>
                               handleProductDelete(
-                                p.id || p._id || p.idproduct
+                                prtd.id || prtd.idproduct || prtd._id
                               )
                             }
                           >
@@ -592,6 +570,7 @@ const [products, setProducts] = useState([]);
           </section>
         </main>
       ) : (
+        // ---------------- OTHER PAGES ----------------
         <main className="main">
           <h2 style={{ padding: "20px" }}>{Activepage}</h2>
         </main>
