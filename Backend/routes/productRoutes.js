@@ -23,7 +23,7 @@ const upload = multer({
 
 
 router.post("/addproduct",upload.single("file"),addproduct);
-router.delete("/delproduct",delproduct)
+router.delete("/delproduct/:id",delproduct)
 router.get("/listproducts",listproducts)
 
 export default router;

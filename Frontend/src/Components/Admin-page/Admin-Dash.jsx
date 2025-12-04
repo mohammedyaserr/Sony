@@ -262,7 +262,7 @@ const Dashboard = () => {
     const confirmed = window.confirm("Delete this product?");
     if (!confirmed) return;
     try {
-      const resp = await axios.delete(`${url}/product/deleteproduct/${id}`);
+      const resp = await axios.delete(`${url}/product/delproduct/${id}`);
       if (resp?.status >= 200 && resp?.status < 300) {
         alert("Deleted");
         fetchProducts();
@@ -553,9 +553,7 @@ const Dashboard = () => {
                           <button
                             className="danger"
                             onClick={() =>
-                              handleProductDelete(
-                                prtd.id || prtd.idproduct || prtd._id
-                              )
+                              handleProductDelete()
                             }
                           >
                             Delete
