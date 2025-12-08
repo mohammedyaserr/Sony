@@ -6,6 +6,7 @@ import Homepage from './Components/Pages/Home-page'
 import Adminpage from './Components/Pages/Admin-page';
 import Loginpage from './Components/Pages/Login-page';
 import Signuppage from './Components/Pages/Signup-page';
+import Tvandhome from './Components/Pages/Tv-and-home';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/admindash' element={<Adminpage/>}/>
         <Route path='/login' element={<Loginpage/>}/>
         <Route path='/signup' element={<Signuppage/>}/>
+        <Route path='/Televisions' element={<Tvandhome/>}/>
       </Routes>
       </BrowserRouter>
     </>

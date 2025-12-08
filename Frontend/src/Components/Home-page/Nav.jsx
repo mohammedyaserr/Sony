@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import './Nav.css';
 
 import navlogo from '../../assets/sony-nav-logo.svg';
@@ -53,7 +53,7 @@ const Nav = () => {
 
                     <div className="nav-innerlinks">
                         <ul>
-                            <li>TVs & Home Cinema</li>
+                            <Link to='/Televisions' className='link'><li>TVs & Home Cinema</li></Link>
                             <li>Audio</li>
                             <li>Gaming Gear</li>
                             <li>Cameras</li>
