@@ -48,6 +48,13 @@ export const listproducts = ((req,res)=>{
 })
 
 
+// ------------ Edit products ------------
+
+export const editproducts = ((req,res)=>{
+    const productid = req.params.id;
+    const sql = "UPDATE products SET title = ?, img=?, description=?, qnty=?, brnad=?"
+})
+
 // ------------ del products from db ------------
 
 export const delproduct = ((req,res)=>{

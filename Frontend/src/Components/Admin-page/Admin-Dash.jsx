@@ -69,7 +69,7 @@ const Dashboard = () => {
   const handleupdateuser = async (e) => {
     e?.preventDefault?.();
     try {
-      const response = await axios.put(`${url}/user/edituser`, edituser);
+      const response = await axios.put(`${url}/user/edituser/${edituser.idusers}`, edituser);
       if (response?.status >= 200 && response?.status < 300) {
         alert("Edited Successfully");
         setShowEdit(false);
@@ -553,7 +553,7 @@ const Dashboard = () => {
                           <button
                             className="danger"
                             onClick={() =>
-                              handleProductDelete()
+                              handleProductDelete(prtd.id)
                             }
                           >
                             Delete
