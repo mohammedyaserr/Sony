@@ -232,7 +232,7 @@ const Dashboard = () => {
   };
 
   // submit product edit (multipart)
-  const handleProductUpdate = async (e) => {
+  const handleProductUpdate = async (e,productid) => {
     e?.preventDefault?.();
     try {
       const form = new FormData();
@@ -240,9 +240,14 @@ const Dashboard = () => {
       form.append("title", productEdit.title);
       if (productEdit.img) form.append("file", productEdit.img);
 
-      const resp = await axios.put(`${url}/product/editproduct`, form, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const resp = await axios.put(`${url}/product/editproducts/${productid}`, form,
+        {
+          headers:{
+            "content-Type":"mulipart/form-data"
+          },
+        }
+      );
+
 
       if (resp?.status >= 200 && resp?.status < 300) {
         alert("Product updated");
@@ -254,7 +259,8 @@ const Dashboard = () => {
       }
     } catch (err) {
       console.error("Product update error:", err);
-      alert("Product update failed — check console.");
+      alert("Product update failed — check console.",err);
+      
     }
   };
 
@@ -319,6 +325,7 @@ const Dashboard = () => {
                   <th>Email</th>
                   <th>Number</th>
                   <th>Pass</th>
+                  <th>Role</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -332,6 +339,7 @@ const Dashboard = () => {
                       <td>{list.email}</td>
                       <td>{list.num}</td>
                       <td>{list.pass}</td>
+                      <td>{list.usertype}</td>
                       <td>
                         <button
                           className="edit-btn"
@@ -372,7 +380,7 @@ const Dashboard = () => {
             </table>
           </section>
         </main>
-      ) : Activepage === "Products" ? (
+            ) : Activepage === "Products" ? (
         // ---------------- PRODUCTS PAGE ----------------
         <main className="main">
           <nav className="navbar">
@@ -500,7 +508,7 @@ const Dashboard = () => {
               </form>
             </div>
 
-            {/* Right: Products list */}
+            {/* Right: Products table */}
             <div className="product-panel-modern product-panel-modern--list">
               <div className="product-panel-modern-header">
                 <h3>Products</h3>
@@ -512,62 +520,78 @@ const Dashboard = () => {
               {products.length === 0 ? (
                 <p className="products-empty-modern">No products found.</p>
               ) : (
-                <div className="products-grid-modern">
-                  {products.map((prtd) => (
-                    <div
-                      className="product-card-modern"
-                      key={prtd.id || prtd.idproduct || prtd._id}
-                    >
-                      <div className="product-card-thumb-modern">
-                        {prtd.img ? (
-                          <img
-                            src={`${url}/uploads/${prtd.img}`}
-                          />
-                        ) : (
-                          <span className="product-card-placeholder-modern">
-                            Image
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="product-card-body-modern">
-                        <h4 className="product-card-title-modern">
-                          {prtd.title}
-                        </h4>
-
-                        <p className="product-card-meta-modern">
-                          Brand: {prtd.brand || "—"}
-                        </p>
-
-                        <div className="product-card-stats-modern">
-                          <span>Qty: {prtd.qnty ?? "—"}</span>
-                          <span className="product-card-price-modern">
-                            {prtd.price ? `₹ ${prtd.price}` : "₹ —"}
-                          </span>
-                        </div>
-
-                        <div className="product-card-actions-modern">
-                          <button onClick={() => openProductEdit(prtd)}>
-                            Edit
-                          </button>
-                          <button
-                            className="danger"
-                            onClick={() =>
-                              handleProductDelete(prtd.id)
-                            }
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="product-table-wrapper">
+                  <table className="product-table">
+                    <thead>
+                      <tr>
+                        <th>SL No.</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Qty</th>
+                        <th>Price (₹)</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {products.map((prtd, index) => (
+                        <tr
+                          key={prtd.id || prtd.idproduct || prtd._id || index}
+                        >
+                          <td>{index + 1}</td>
+                          <td>
+                            {prtd.img ? (
+                              <img
+                                src={`${url}/uploads/${prtd.img}`}
+                                alt={prtd.title}
+                                style={{
+                                  width: "60px",
+                                  height: "60px",
+                                  objectFit: "cover",
+                                  borderRadius: "4px",
+                                }}
+                              />
+                            ) : (
+                              <span style={{ fontSize: "12px", opacity: 0.6 }}>
+                                No image
+                              </span>
+                            )}
+                          </td>
+                          <td>{prtd.title || "—"}</td>
+                          <td>{prtd.brand || "—"}</td>
+                          <td>{prtd.catogery || prtd.category || "—"}</td>
+                          <td>{prtd.qnty ?? "—"}</td>
+                          <td>{prtd.price ? `₹ ${prtd.price}` : "₹ —"}</td>
+                          <td>
+                            <button
+                              className="edit-btn"
+                              onClick={() => openProductEdit(prtd)}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="delete-btn danger"
+                              onClick={() =>
+                                handleProductDelete(
+                                  prtd.id || prtd.idproduct || prtd._id
+                                )
+                              }
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>
           </section>
         </main>
       ) : (
+
         // ---------------- OTHER PAGES ----------------
         <main className="main">
           <h2 style={{ padding: "20px" }}>{Activepage}</h2>

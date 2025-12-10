@@ -719,3 +719,40 @@
   color: var(--text-light);
   font-size: 0.8rem;
 }
+
+
+/* =========================================
+   PRODUCT TABLE
+   ========================================= */
+
+   .product-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.product-table th,
+.product-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.product-table th {
+  background: #f7f7f7;
+  font-weight: 600;
+}
+
+.product-table tr:hover {
+  background: #fafafa;
+}
+
+.product-table img {
+  display: block;
+}
+

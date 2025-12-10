@@ -34,7 +34,6 @@ export const addproduct = ((req,res)=> {
 // ------------ fetch products from db ------------
 
 export const listproducts = ((req,res)=>{
-    // const sql = "SELECT * FROM products"
 
     db.query("SELECT * FROM products",(error,result)=>{
         if (error) {
@@ -52,7 +51,21 @@ export const listproducts = ((req,res)=>{
 
 export const editproducts = ((req,res)=>{
     const productid = req.params.id;
-    const sql = "UPDATE products SET title = ?, img=?, description=?, qnty=?, brnad=?"
+
+    const  {title, img, description, qnty, brand} = req.body;
+
+    const sql = "UPDATE products SET title = ?, img=?, description=?, qnty=?, brand=? WHERE id=?";
+    const values = [title, img, description, qnty, brand, productid];
+
+    db.query(sql, values, (error,result)=>{
+        if (error) {
+            console.log(error);
+            res.status(500).json("Edit Failed")
+        } else {
+            console.log("Edit works successfully");
+            res.status(200).json(" eidt Success")
+        }
+    })
 })
 
 // ------------ del products from db ------------

@@ -48,7 +48,9 @@ const Nav = () => {
                 <div className="nav-inner-div">
 
                     <div className="nav-img-container">
+                        <Link to={'/'}>
                         <img src={navlogo} alt="" />
+                        </Link>
                     </div>
 
                     <div className="nav-innerlinks">
