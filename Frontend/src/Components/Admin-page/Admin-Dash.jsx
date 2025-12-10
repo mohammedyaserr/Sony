@@ -290,11 +290,11 @@ const Dashboard = () => {
       <aside className="sidebar">
         <h2>Admin</h2>
         <ul>
-          <li onClick={() => SetActivepage("Dashboard")}>Dashboard</li>
-          <li onClick={() => SetActivepage("Users")}>Users</li>
-          <li onClick={() => SetActivepage("Reports")}>Reports</li>
-          <li onClick={() => SetActivepage("Products")}>Manage Products</li>
-          <li onClick={() => SetActivepage("Settings")}>Settings</li>
+          <li className={Activepage === "Dashboard" ? "Active" : ""} onClick={() => SetActivepage("Dashboard")}>Dashboard</li>
+          <li className={Activepage === "Users" ? "Active" : ""} onClick={() => SetActivepage("Users")}>Users</li>
+          <li className={Activepage === "Reports" ? "Active" : ""} onClick={() => SetActivepage("Reports")}>Reports</li>
+          <li className={Activepage === "Products" ? "Active" : ""} onClick={() => SetActivepage("Products")}>Manage Products</li>
+          <li className={Activepage === "Settings" ? "Active" : ""} onClick={() => SetActivepage("Settings")}>Settings</li>
         </ul>
       </aside>
 

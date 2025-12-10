@@ -147,6 +147,35 @@
     text-decoration: none;
 }
 
+.nav-innerlinks ul li {
+  position: relative;
+  cursor: pointer;
+  color: white;
+  padding-bottom: 5px;
+}
+
+/* Fake underline */
+.nav-innerlinks ul li::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: white;
+
+  transform: translateX(-50%) scaleX(0);  /* start from center */
+  transform-origin: center;               /* animation grows outward */
+  transition: transform 0.4s ease;
+}
+
+/* Hover → expand from center */
+.nav-innerlinks ul li:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+
+
 
 
 
