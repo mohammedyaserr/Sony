@@ -26,6 +26,29 @@ export const addUsers = ((req,res) => {
 
 
 
+export const addUserslogin = ((req,res) => {
+    const {name, email, num, pass, usertype} = req.body;
+
+    const values = [name, email, num, pass, usertype];
+        console.log(values,"values");
+        
+    const sql = "INSERT INTO users (name, email, num, pass) values (?,?,?,?)";
+
+    db.query(sql, values , (error,result) => {
+        if (error) {
+            console.log(error);
+            res.status(500).json("server error")
+            
+        }else {
+            // console.log(result);
+            res.status(200).json("success")
+            
+        }
+    })
+})
+
+
+
 // ------------------------ get users from db ------------------------
 
 

@@ -27,7 +27,7 @@ const Signup = () => {
     const handlesignup = async (e)=> {
       e.preventDefault()
       try {
-        const response = await axios.post(`${url}/user/adduser`,userdata);
+        const response = await axios.post(`${url}/user/addUserslogin`,userdata);
         if (response.status === 200) {
           console.log("success");
           alert("reg success")

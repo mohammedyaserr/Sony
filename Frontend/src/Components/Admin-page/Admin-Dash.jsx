@@ -1,9 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Dashboard.css";
 import axios from "axios";
+import logout from '../../assets/out.png'
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const url = import.meta.env.VITE_APP_URL || "";
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+        localStorage.removeItem("admin");
+        navigate("/login");
+        window.location.reload();
+    };
 
   // ---------------- Users ----------------
   const [showAdd, setShowAdd] = useState(false);
@@ -288,14 +298,22 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <aside className="sidebar">
+        <span>
         <h2>Admin</h2>
         <ul>
-          <li className={Activepage === "Dashboard" ? "Active" : ""} onClick={() => SetActivepage("Dashboard")}>Dashboard</li>
+          {/* <li className={Activepage === "Dashboard" ? "Active" : ""} onClick={() => SetActivepage("Dashboard")}>Dashboard</li> */}
           <li className={Activepage === "Users" ? "Active" : ""} onClick={() => SetActivepage("Users")}>Users</li>
-          <li className={Activepage === "Reports" ? "Active" : ""} onClick={() => SetActivepage("Reports")}>Reports</li>
+          {/* <li className={Activepage === "Reports" ? "Active" : ""} onClick={() => SetActivepage("Reports")}>Reports</li> */}
           <li className={Activepage === "Products" ? "Active" : ""} onClick={() => SetActivepage("Products")}>Manage Products</li>
-          <li className={Activepage === "Settings" ? "Active" : ""} onClick={() => SetActivepage("Settings")}>Settings</li>
+          {/* <li className={Activepage === "Settings" ? "Active" : ""} onClick={() => SetActivepage("Settings")}>Settings</li> */}
         </ul>
+        </span>
+
+        <div className="logoutbtn" onClick={handleLogout}>
+          <p>Logout</p>
+          <img className="logouticon" src={logout} alt="" />
+        </div>
+
       </aside>
 
       {Activepage === "Users" ? (
@@ -303,7 +321,7 @@ const Dashboard = () => {
         <main className="main">
           <nav className="navbar">
             <input type="text" placeholder="Search..." />
-            <div className="profile">👤 Admin</div>
+            <div className="profile">{ name ? name : Admin}👤 Admin</div>
           </nav>
 
           <section className="stats">
