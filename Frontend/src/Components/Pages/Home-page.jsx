@@ -1,12 +1,12 @@
 import React from 'react'
-import Nav from '../Home-page/Nav'
-import HomeBanner from '../Home-page/Home-Banner'
-import HomeNotices from '../Home-page/Home-Notices'
-import Homelatest from '../Home-page/Home-Latest'
-import Homepromotionsandoffers from '../Home-page/Home-promotions-and-offers'
-import Homerecentlyviewed from '../Home-page/Home-recently-viewed'
-import Homefootnotes from '../Home-page/Home-footnotes'
-import Homefooter from '../Home-page/Home-footer'
+import Nav from '../Home/Nav'
+import HomeBanner from '../Home/Home-Banner'
+import HomeNotices from '../Home/Home-Notices'
+import Homelatest from '../Home/Home-Latest'
+import Homepromotionsandoffers from '../Home/Home-promotions-and-offers'
+import Homerecentlyviewed from '../Home/Home-recently-viewed'
+import Homefootnotes from '../Home/Home-footnotes'
+import Homefooter from '../Home/Home-footer'
 
 const Homepage = () => {
   return (

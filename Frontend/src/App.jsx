@@ -7,6 +7,7 @@ import Adminpage from './Components/Pages/Admin-page';
 import Loginpage from './Components/Pages/Login-page';
 import Signuppage from './Components/Pages/Signup-page';
 import Tvandhome from './Components/Pages/Tv-and-home';
+import Cartpage from './Components/Pages/Cart-page';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/login' element={<Loginpage/>}/>
         <Route path='/signup' element={<Signuppage/>}/>
         <Route path='/Televisions' element={<Tvandhome/>}/>
+        <Route path='/cart' element={<Cartpage/>}/>
       </Routes>
       </BrowserRouter>
     </>

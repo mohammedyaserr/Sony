@@ -1,6 +1,6 @@
 import React from 'react'
-import Nav from '../Home-page/Nav'
-import Tvsectionbody from '../Tv and Home sec/Tv-section-body'
+import Nav from '../Home/Nav'
+import Tvsectionbody from '../Tv and Home/Tv-section-body'
 
 const Tvandhome = () => {
   return (
