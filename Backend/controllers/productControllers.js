@@ -86,3 +86,23 @@ export const delproduct = ((req,res)=>{
         }
     })
 })
+
+
+// ------------ preview selected products from ------------
+
+export const previewproducts = ((req,res)=>{
+    const prevprtdid = req.params.id;
+    const sql = "SELECT * FROM products WHERE id = ?"
+
+    db.query(sql, [prevprtdid], (err,result)=>{
+        if(err){
+            res.status(500).json("server error")
+            console.log(err);
+            
+        } else {
+            res.status(200).json(result,"success")
+            console.log(result);
+            
+        }
+    })
+})

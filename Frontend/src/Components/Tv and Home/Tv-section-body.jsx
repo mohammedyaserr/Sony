@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import {useNavigate} from 'react-router-dom'
 import "./Tv-section-body.css";
 
 const url = import.meta.env.VITE_APP_URL
@@ -8,6 +9,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const Tvsectionbody = () => {
+  const navigate = useNavigate()
 
 
   // =================================================
@@ -34,12 +36,12 @@ const [listProducts, setListProducts] = useState([]);
   // =============== FETCH PRODUCTS END ==============
   // =================================================
 
-  
 
  // =============== Use Effect section ==============
 
   useEffect(()=>{
     fetchpoducts();
+
   },[])
 
   // =============== Use Effect section END ==========
@@ -50,7 +52,7 @@ const [listProducts, setListProducts] = useState([]);
 
       <div className="tv-grid">
         {listProducts.map((item) => (
-          <div className="tv-card" key={item.id}>
+          <div className="tv-card" key={item.id} onClick={() => navigate (`/products/${item.id}`)}>
             <div className="tv-img-wrapper">
               <img src={`${url}/uploads/${item.img}`} alt={item.title} className="tv-img" />
             </div>
@@ -60,7 +62,7 @@ const [listProducts, setListProducts] = useState([]);
               <p className="tv-size">{item.brand}</p>
               <p className="tv-price">₹{item.price}</p>
 
-              <button className="tv-btn">View Details</button>
+              <button className="tv-btn" onClick={() => navigate (`/Products/${item.id}`)}>View Details</button>
             </div>
           </div>
         ))}

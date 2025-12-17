@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import './Nav.css';
 
 import navlogo from '../../assets/sony-nav-logo.svg';
 import navsearch from '../../assets/magnifying-glass.png';
 import downarrow from '../../assets/down-arrow.png';
+import cart from '../../assets/cart.png'
 import navwishlist from '../../assets/heart (1).png';
 import navuser from '../../assets/user (1).png';
 
 const Nav = () => {
 
     const [showPopup, setShowPopup] = useState(null);
-    const [username, setUsername] = useState("");   // ✅ NEW
+    const [username, setUsername] = useState("");   // ✅ NcEW
     const popupRef = useRef(null);
     const navigate = useNavigate();
 
@@ -49,7 +50,7 @@ const Nav = () => {
 
                     <div className="nav-img-container">
                         <Link to={'/'}>
-                        <img src={navlogo} alt="" />
+                            <img src={navlogo} alt="" />
                         </Link>
                     </div>
 
@@ -62,11 +63,11 @@ const Nav = () => {
                             <Link to='/Televisions' className='link'><li>Cloud Service</li></Link>
                             <Link to='/Televisions' className='link'><li>Car Audio</li>
                             </Link>
-                            
-                            
-                            
-                            
-                            
+
+
+
+
+
 
                             <div className="nav-viewall">
                                 <li>View All</li>
@@ -86,8 +87,12 @@ const Nav = () => {
                         </div>
 
                         <div className="nav-right-inner">
-                            <img src={navwishlist} alt="" />
-                            <img src={navuser} alt="" onClick={() => setShowPopup("account")}/>
+                            <div className="cartimg-count-container">
+                                <p>10</p>
+                                <Link to={"/cart"}><img src={cart} alt="" className='nav-cartimg'/></Link>
+                            </div>
+                            <img src={navwishlist} alt="" className='right-nav'/>
+                            <img src={navuser} alt="" className='right-nav' onClick={() => setShowPopup("account")} />
 
                             {/* ✅ SHOW USERNAME HERE */}
                             <p onClick={() => setShowPopup("account")}>
@@ -129,13 +134,13 @@ const Nav = () => {
 
                         <div className="tvpopup-menu-inner-left">
                             <div className="tvpopup-menu-inner-left-heading">
-                            <Link to='/Televisions' className='link'>
-                                <h4>TVs & Home Cinema</h4>
-                            </Link>
+                                <Link to='/Televisions' className='link'>
+                                    <h4>TVs & Home Cinema</h4>
+                                </Link>
 
                             </div>
                             <ul>
-                                
+
                             </ul>
                         </div>
 
@@ -143,7 +148,7 @@ const Nav = () => {
                 </div>
             )}
 
-            
+
 
         </>
     );

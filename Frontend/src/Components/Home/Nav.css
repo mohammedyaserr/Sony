@@ -134,13 +134,35 @@
   cursor: pointer;
 }
 
+.cartimg-count-container {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #000; */
+}
+.cartimg-count-container p {
+  position: absolute;
+  background: red;
+  color: #ffffff;
+  border-radius: 50px;
+  padding: 0px 2px;
+  margin-bottom: 18px;
+  margin-left: 15px;
+}
+.nav-cartimg {
+  width: 85%;
+  /* background: gray; */
+}
+
 .nav-right-inner p {
   font-family: 'SST', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   transform: scaleY(0.8);
 
 }
 
-.nav-right-inner img {
+.right-nav {
   width: 12%;
 }
 

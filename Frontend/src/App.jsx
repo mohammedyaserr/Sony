@@ -8,7 +8,8 @@ import Loginpage from './Components/Pages/Login-page';
 import Signuppage from './Components/Pages/Signup-page';
 import Tvandhome from './Components/Pages/Tv-and-home';
 import Cartpage from './Components/Pages/Cart-page';
-import Productspreview from './Components/Pages/Products-details-page';
+import Productspreviewpage from './Components/Pages/Products-details-page';
+
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
         <Route path='/login' element={<Loginpage/>}/>
         <Route path='/signup' element={<Signuppage/>}/>
         <Route path='/Televisions' element={<Tvandhome/>}/>
-        <Route path='/Products' element={<Productspreview/>}/>
+        <Route path='/Products/:id' element={<Productspreviewpage/>}/>
         <Route path='/cart' element={<Cartpage/>}/>
       </Routes>
       </BrowserRouter>

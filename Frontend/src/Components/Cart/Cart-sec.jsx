@@ -10,7 +10,7 @@ const CartSec = () => {
 
 
 
-    const [cout, setCout] = useState (0)
+    const [cout, setCout] = useState (1)
     return (
         <>
             <div className="cart-container">
@@ -32,7 +32,7 @@ const CartSec = () => {
                                 </div>
 
                                 <div className="prtd-qnty">
-                                    <img src={minusicon} alt="" onClick={() => setCout(prev => prev -1)}/>
+                                    <img src={minusicon} alt="" onClick={() => setCout(prev => (prev > 0 ? prev -1 : 0 ))}/>
                                     <p>{cout}</p>
                                     <img src={plusicon} alt="" onClick={() => setCout(prev => prev +1)}/>
                                 </div>

@@ -1,16 +1,21 @@
 import React from 'react'
 import Nav from '../Home/Nav'
-import Productpreview from '../product view/Product-preview'
+
+import Homefootnotes from '../Home/Home-footnotes'
+import Homefooter from '../Home/Home-footer'
+import Productpreviewcomp from '../product view/Product-preview'
 
 
 
-const Productspreview = () => {
+const Productspreviewpage = () => {
   return (
     <>
       <Nav/>
-      <Productpreview/>
+      <Productpreviewcomp/>
+      <Homefootnotes/>
+      <Homefooter/>
     </>
   )
 }
 
-export default Productspreview
+export default Productspreviewpage
