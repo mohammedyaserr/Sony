@@ -10,7 +10,7 @@ import navuser from '../../assets/user (1).png';
 
 const Nav = () => {
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = useState(null);
     const [username, setUsername] = useState("");   // ✅ NEW
     const popupRef = useRef(null);
     const navigate = useNavigate();
@@ -55,12 +55,18 @@ const Nav = () => {
 
                     <div className="nav-innerlinks">
                         <ul>
-                            <Link to='/Televisions' className='link'><li>TVs & Home Cinema</li></Link>
-                            <li>Audio</li>
-                            <li>Gaming Gear</li>
-                            <li>Cameras</li>
-                            <li>Cloud Service</li>
-                            <li>Car Audio</li>
+                            <li onClick={() => setShowPopup((prev) => (prev === null ? "tv" : null))}>TVs & Home Cinema</li>
+                            <Link to='/Televisions' className='link'><li>Audio</li></Link>
+                            <Link to='/Televisions' className='link'><li>Gaming Gear</li></Link>
+                            <Link to='/Televisions' className='link'><li>Cameras</li></Link>
+                            <Link to='/Televisions' className='link'><li>Cloud Service</li></Link>
+                            <Link to='/Televisions' className='link'><li>Car Audio</li>
+                            </Link>
+                            
+                            
+                            
+                            
+                            
 
                             <div className="nav-viewall">
                                 <li>View All</li>
@@ -81,10 +87,10 @@ const Nav = () => {
 
                         <div className="nav-right-inner">
                             <img src={navwishlist} alt="" />
-                            <img src={navuser} alt="" />
+                            <img src={navuser} alt="" onClick={() => setShowPopup("account")}/>
 
                             {/* ✅ SHOW USERNAME HERE */}
-                            <p onClick={() => setShowPopup(!showPopup)}>
+                            <p onClick={() => setShowPopup("account")}>
                                 {username ? username : "My Sony"}
                             </p>
                         </div>
@@ -94,7 +100,9 @@ const Nav = () => {
             </div>
 
             {/* -------- POPUP BELOW MY SONY -------- */}
-            {showPopup && (
+
+
+            {showPopup === "account" && (
                 <div className="mysony-popup" ref={popupRef}>
                     <h4>Account</h4>
 
@@ -111,6 +119,32 @@ const Nav = () => {
                     )}
                 </div>
             )}
+
+
+            {/* -------- POPUP BELOW Tv & Home cinema -------- */}
+
+            {showPopup === "tv" && (
+                <div className="tvpopup" ref={popupRef}>
+                    <div className="tvpopup-menu-inner">
+
+                        <div className="tvpopup-menu-inner-left">
+                            <div className="tvpopup-menu-inner-left-heading">
+                            <Link to='/Televisions' className='link'>
+                                <h4>TVs & Home Cinema</h4>
+                            </Link>
+
+                            </div>
+                            <ul>
+                                
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
+            
+
         </>
     );
 };

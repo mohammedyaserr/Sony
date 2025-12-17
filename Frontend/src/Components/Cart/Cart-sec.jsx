@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import './cart-sec.css';
 
@@ -7,6 +7,10 @@ import minusicon from '../../assets/minus-sign.png'
 import plusicon from '../../assets/plus.png'
 
 const CartSec = () => {
+
+
+
+    const [cout, setCout] = useState (0)
     return (
         <>
             <div className="cart-container">
@@ -28,9 +32,9 @@ const CartSec = () => {
                                 </div>
 
                                 <div className="prtd-qnty">
-                                    <img src={minusicon} alt="" />
-                                    <p>2</p>
-                                    <img src={plusicon} alt="" />
+                                    <img src={minusicon} alt="" onClick={() => setCout(prev => prev -1)}/>
+                                    <p>{cout}</p>
+                                    <img src={plusicon} alt="" onClick={() => setCout(prev => prev +1)}/>
                                 </div>
                                 <h2>12,999 rs</h2>
                             </div>

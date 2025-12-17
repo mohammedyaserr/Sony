@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.products-previwepage-container {
+    width: 100%;
+    height: 100vh;
+    background: rgb(204, 42, 42);
+}
+
+.products-img-and-price-container {
+    width: 100%;
+    height: 85%;
+    background: #7637cd;
+}
