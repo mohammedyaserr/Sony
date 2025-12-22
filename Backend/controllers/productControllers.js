@@ -97,7 +97,7 @@ export const previewproducts = ((req,res)=>{
             console.log(err);
             
         } else {
-            res.status(200).json(result,"success")
+            res.status(200).json(result[0])
             console.log(result);
             
         }

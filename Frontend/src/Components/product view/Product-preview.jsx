@@ -14,23 +14,22 @@ const url = import.meta.env.VITE_APP_URL;
 
 const Productpreviewcomp = () => {
 
-  const { prevprtdid } = useParams();
+  const {id } = useParams();
 
   // =================================================
   // =============== FETCH PREVIEW PRODUCTS ==========
   // =================================================
 
-  const [previewProduct, setPreviewProducts] = useState({});
+  const [previewProduct, setPreviewProducts] = useState(null);
 
   // api calling
   const Previewproducts = async () => {
     try {
-      const response = await axios.get(`${url}/product/previewproducts/${prevprtdid}`);
+      const response = await axios.get(`${url}/product/previewproducts/${id}`);
       
       setPreviewProducts(response.data);
-      console.log(previewProduct);
       
-      console.log(response.data);
+      console.log(response.data,"test");
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +41,11 @@ const Productpreviewcomp = () => {
 
   useEffect(() => {
     Previewproducts();
-  }, [])
+  }, [id])
+
+  if (!previewProduct) {
+    return <p>Loading product...</p>;
+  }
 
 
   return (
@@ -53,7 +56,7 @@ const Productpreviewcomp = () => {
           <div className="products-previwepage-container">
             <div className="products-img-and-price-container">
               <div className="productimg-container">
-                <img src={previewProduct.logo} alt="" />
+                <img src={`${url}/uploads/${previewProduct.img}`} alt="" />
               </div>
 
               <div className="prouductdetails-container">
@@ -61,6 +64,7 @@ const Productpreviewcomp = () => {
                 <h1>{previewProduct.title}</h1>
 
                 <div className="productsizedetails-container">
+                  <p>{previewProduct.brand}</p>
                   <p>Select Your Size :</p>
 
                   <div className="productsizedetails-inner-selector">
@@ -75,7 +79,7 @@ const Productpreviewcomp = () => {
                   <div className="product-price-top">
                     <div className="product-price-top-inner-left">
                       <p>MPR</p>
-                      <h2></h2>
+                      <h2>{previewProduct.price}</h2>
                       <p>(incl. of all taxes)</p>
                     </div>
 
@@ -97,7 +101,8 @@ const Productpreviewcomp = () => {
                 <h2>Description and Details</h2>
               </div>
               <div className="product-description-details">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima magnam deserunt perspiciatis debitis saepe dicta beatae quaerat totam, provident ut dolor itaque deleniti praesentium illo magni veniam cum incidunt nihil!</p>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima magnam deserunt perspiciatis debitis saepe dicta beatae quaerat totam, provident ut dolor itaque deleniti praesentium illo magni veniam cum incidunt nihil!</p> */}
+                <p>{previewProduct.description}</p>
               </div>
             </div>
           </div>
