@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import { addproduct, delproduct, editproducts, listproducts, previewproducts } from "../controllers/productControllers.js";
 
-const router = express.Router()
+const router = express.Router();
 
 const storage = multer.diskStorage({
     destination : function (req,file,cb)
@@ -21,11 +21,10 @@ const upload = multer({
 })
 
 
-
-router.post("/addproduct",upload.single("file"),addproduct);
-router.get("/listproducts",listproducts)
-router.put("/editproducts/:id",upload.single("file"),editproducts)
-router.delete("/delproduct/:id",delproduct)
-router.get("/previewproducts/:id",previewproducts)
+router.post("/addproduct", upload.single("file"),addproduct);
+router.get("/listproducts", listproducts)
+router.put("/editproducts/:id", upload.single("file"),editproducts)
+router.delete("/delproduct/:id", delproduct)
+router.get("/previewproducts/:id", previewproducts)
 
 export default router;

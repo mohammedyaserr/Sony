@@ -63,13 +63,12 @@ export const editproducts = ((req,res)=>{
             res.status(500).json("Edit Failed")
         } else {
             console.log("Edit works successfully");
-            res.status(200).json(" eidt Success")
+            res.status(200).json(" edit Success")
         }
     })
 })
 
 // ------------ del products from db ------------
-
 export const delproduct = ((req,res)=>{
     const productid = req.params.id;
     const sql = "DELETE FROM products WHERE id = ?";
@@ -80,9 +79,7 @@ export const delproduct = ((req,res)=>{
             res.status(500).json("server error")
         } else {
             res.status(200).json("success")
-            console.log("Product was deleted");
-
-            
+            console.log("Product was deleted");   
         }
     })
 })
