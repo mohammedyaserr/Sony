@@ -103,3 +103,25 @@ export const previewproducts = ((req,res)=>{
         }
     })
 })
+
+
+// ------------ add products to cart ------------
+
+export const addtocart = ((req,res) =>{
+    
+    const {img, title, brand, size, price, description} = req.body;
+
+    const sql = "INSERT INTO cart (title, price, img, size, brand, description ) values (?, ?, ?, ?, ?, ?)"
+
+    const values = [img, title, brand, size, price, description]
+
+    db.query(sql,values,(error,result)=>{
+        if (error) {
+            re
+        } else {
+            
+        }
+    })
+
+
+})

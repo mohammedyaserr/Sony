@@ -81,6 +81,10 @@
     border-radius: 20px;
     border-style: none;
 }
+.productsizedetails-container button.active{
+    border: dashed 1px blue;
+}
+
 
 .product-price-container {
     width: 100%;
@@ -163,3 +167,4 @@
     margin-bottom: 5px;
     /* background: goldenrod; */
 }
+

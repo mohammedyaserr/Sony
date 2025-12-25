@@ -201,6 +201,10 @@
 .nav-innerlinks ul li:hover::after {
   transform: translateX(-50%) scaleX(1);
 }
+.nav-innerlinks ul li.tvactive {
+  text-decoration: underline rgb(255, 255, 255);
+  text-underline-offset: 7.5px;
+}
 
 
 
@@ -270,6 +274,7 @@
   display: flex;
   justify-content: center;
 }
+
 
 .tvpopup-menu-inner {
   width: 80%;

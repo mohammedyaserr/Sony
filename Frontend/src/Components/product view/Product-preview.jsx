@@ -16,6 +16,15 @@ const Productpreviewcomp = () => {
 
   const {id } = useParams();
 
+  const [productsData, setProudctsData] = useState({
+    
+  })
+
+
+  // size selection
+
+  const [size, setSize] = useState('') 
+
   // =================================================
   // =============== FETCH PREVIEW PRODUCTS ==========
   // =================================================
@@ -65,13 +74,12 @@ const Productpreviewcomp = () => {
 
                 <div className="productsizedetails-container">
                   <p>{previewProduct.brand}</p>
-                  <p>Select Your Size :</p>
+                  <p>Selected Size : {size}</p>
 
                   <div className="productsizedetails-inner-selector">
 
-                    <button type='radio' >139 cm (55)</button>
-                    <button type='radio'>75</button>
-                    <button type='radio'>55</button>
+                    <button type='button' className={size === '135cm' ? "active" : ""} onClick={() => setSize("135cm")}>135cm</button>
+                    <button type='button' className={size === "55cm" ? "active" : ""} onClick={(e) => setSize("55cm")}>55</button>
                   </div>
                 </div>
 

@@ -12,6 +12,7 @@ import navuser from '../../assets/user (1).png';
 const Nav = () => {
 
     const [showPopup, setShowPopup] = useState(null);
+    const [popupactive, setPopupactive] = useState("");
     const [username, setUsername] = useState("");   // ✅ NcEW
     const popupRef = useRef(null);
     const navigate = useNavigate();
@@ -56,7 +57,7 @@ const Nav = () => {
 
                     <div className="nav-innerlinks">
                         <ul>
-                            <li onClick={() => setShowPopup((prev) => (prev === null ? "tv" : null))}>TVs & Home Cinema</li>
+                            <li onClick={() => {setShowPopup((prev) => (prev === null ? "tv" : null)); }}   className={showPopup === "tv" ? "tvactive" : "null"}>TVs & Home Cinema</li>
                             <Link to='/Televisions' className='link'><li>Audio</li></Link>
                             <Link to='/Televisions' className='link'><li>Gaming Gear</li></Link>
                             <Link to='/Televisions' className='link'><li>Cameras</li></Link>
@@ -128,7 +129,7 @@ const Nav = () => {
 
             {/* -------- POPUP BELOW Tv & Home cinema -------- */}
 
-            {showPopup === "tv" && (
+            {showPopup === "tv"  && (
                 <div className="tvpopup" ref={popupRef}>
                     <div className="tvpopup-menu-inner">
 
