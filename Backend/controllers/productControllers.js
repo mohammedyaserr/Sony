@@ -117,9 +117,9 @@ export const addtocart = ((req,res) =>{
 
     db.query(sql,values,(error,result)=>{
         if (error) {
-            re
+            res.status(500).json(error)
         } else {
-            
+            res.status(200).json("product added to cart")
         }
     })
 

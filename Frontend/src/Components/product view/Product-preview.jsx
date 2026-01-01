@@ -14,16 +14,25 @@ const url = import.meta.env.VITE_APP_URL;
 
 const Productpreviewcomp = () => {
 
+
   const {id } = useParams();
 
   const [productsData, setProudctsData] = useState({
-    
+
   })
 
 
   // size selection
 
   const [size, setSize] = useState('') 
+
+  const addtocart = async () => {
+    try {
+      const response = await axios.post(`${url}/`)
+    } catch (error) {
+      
+    }
+  }
 
   // =================================================
   // =============== FETCH PREVIEW PRODUCTS ==========
