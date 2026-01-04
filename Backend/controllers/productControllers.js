@@ -113,11 +113,13 @@ export const addtocart = ((req,res) =>{
 
     const sql = "INSERT INTO cart (title, price, img, size, brand, description ) values (?, ?, ?, ?, ?, ?)"
 
-    const values = [img, title, brand, size, price, description]
+    const values = [title, price, img, size, brand, description]
 
     db.query(sql,values,(error,result)=>{
         if (error) {
             res.status(500).json(error)
+            console.log(error);
+            
         } else {
             res.status(200).json("product added to cart")
         }

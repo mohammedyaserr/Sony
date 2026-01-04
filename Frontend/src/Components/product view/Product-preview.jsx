@@ -15,21 +15,23 @@ const url = import.meta.env.VITE_APP_URL;
 const Productpreviewcomp = () => {
 
 
-  const {id } = useParams();
-
-  const [productsData, setProudctsData] = useState({
-
-  })
+  const { id } = useParams();
 
 
   // size selection
-
   const [size, setSize] = useState('') 
 
   const addtocart = async () => {
     try {
-      const response = await axios.post(`${url}/`)
+       await axios.post(`${url}/product/addtocart` , {
+        title: previewProduct.title,
+        size: size,
+        price: previewProduct.price,
+        
+
+      })
     } catch (error) {
+      console.log(error);
       
     }
   }
@@ -103,7 +105,7 @@ const Productpreviewcomp = () => {
                     <div className="product-price-top-inner-right">
                       <img src={addtofavorites} alt="" className='fav' />
                       {/* <img src={favorites} alt="" className='fav'/> */}
-                      <button className='product-add-to-cart'>Add to Cart</button>
+                      <button className='product-add-to-cart' onClick={addtocart}>Add to Cart</button>
                     </div>
 
                   </div>
