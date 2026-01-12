@@ -27,9 +27,15 @@ const Productpreviewcomp = () => {
         title: previewProduct.title,
         size: size,
         price: previewProduct.price,
-        
+        brand: previewProduct.brand,
+        description: previewProduct.description,
+        img: previewProduct.img
+      } )
 
-      })
+      console.log("success");
+
+      alert("Product added to cart")
+      
     } catch (error) {
       console.log(error);
       

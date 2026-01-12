@@ -55,6 +55,7 @@ Dashboard = () => {
         setShowAdd(false);
         setAdduser({ name: "", email: "", num: "", pass: "", usertype: "" });
         fetchuserslist();
+        
       } else {
         console.warn("Add user responded with status:", response?.status);
       }

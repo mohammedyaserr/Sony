@@ -89,8 +89,11 @@ const Nav = () => {
 
                         <div className="nav-right-inner">
                             <div className="cartimg-count-container">
-                                <p>10</p>
-                                <Link to={"/cart"}><img src={cart} alt="" className='nav-cartimg'/></Link>
+                                
+                                <Link to={"/cart"}>
+                                <p>{}</p>
+                                <img src={cart} alt="" className='nav-cartimg'/>
+                                </Link>
                             </div>
                             <img src={navwishlist} alt="" className='right-nav'/>
                             <img src={navuser} alt="" className='right-nav' onClick={() => setShowPopup("account")} />

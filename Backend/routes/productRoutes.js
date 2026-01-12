@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-import { addproduct, addtocart, delproduct, editproducts, listproducts, previewproducts } from "../controllers/productControllers.js";
+import { addproduct, addtocart, delproduct, editproducts, listcartitems, listproducts, previewproducts } from "../controllers/productControllers.js";
 
 const router = express.Router();
 
@@ -27,5 +27,6 @@ router.put("/editproducts/:id", upload.single("file"),editproducts)
 router.delete("/delproduct/:id", delproduct)
 router.get("/previewproducts/:id", previewproducts)
 router.post("/addtocart",addtocart)
+router.get("/listcartitems",listcartitems)
 
 export default router;

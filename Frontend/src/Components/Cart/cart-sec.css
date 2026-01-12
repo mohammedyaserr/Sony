@@ -8,7 +8,8 @@
     width: 100%;
     height: min-content;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    /* align-items: center; */
     background: #ffffff;
 }
 
@@ -17,17 +18,19 @@
     height: min-content;
     margin: 30px 0;
     display: flex;
-    justify-content: space-around;
-    /* background: #e5e5e5; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f2f2f2;
 }
 
 .carts-items-container {
-    width: 80%;
+    /* width: 80%; */
     height: min-content;
 }
 
 .cart-items {
-    width: 65%;
+    width: 80%;
     height: 300px;
     margin: 15px 0;
     padding: 20px;
@@ -38,10 +41,17 @@
 }
 
 .cart-price-details-sec {
-    width: 30%;
-    height: 500px;
+    width: 25%;
+    height: 300px;
     margin: 15px 0;
-    background: #1349e0;
+    padding: 10px;
+    position: sticky;
+    top: 30px;
+    /* bottom: 50px;     */
+    margin-bottom: 10px;
+
+    /* background: #1349e0; */
+    border: solid 2px #dbdbdb;
 }
 
 .cart-img-container {
@@ -98,4 +108,69 @@
 .prtd-qnty img{
     height: 50%;
     cursor: pointer;
+}
+
+
+.cart-price-details-sec-inner {
+    width: 100%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* background: #f36f6f; */
+}
+
+.cart-price-details-sec-inner-top {
+    width: 100%;
+    height: 25%;
+    /* margin-top: 15px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px;
+    /* background: #76fff6; */
+}
+
+.checkoutbtn {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    align-items: center;
+    border: solid 1px rgb(231, 231, 231);
+    background: green;
+    color: #ffffff;
+    font-weight: 700;
+}
+.checkoutbtn img {
+    height: 80%;
+}
+
+.clearcartbtn {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    align-items: center;
+    border: solid 1px rgb(231, 231, 231);
+    background: rgb(218, 20, 20);
+    color: #ffffff;
+    font-weight: 700;
+}
+.clearcartbtn img {
+    height: 80%;
+}
+
+.cart-price-details-sec-inner-details-container {
+    width: 100%;
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: 600;
+    background: rgb(249, 249, 249);
 }

@@ -127,3 +127,20 @@ export const addtocart = ((req,res) =>{
 
 
 })
+
+
+
+// ------------ list products in cart ------------
+
+export const listcartitems = ((req,res) => {
+    
+    db.query("SELECT * FROM cart" , (error,result)=>{
+        if (error) {
+            res.status(500).json("interal error")
+            console.log(error);
+            
+        } else {
+            res.status(200).json(result,"successfully fetched")
+        }
+    })
+})

@@ -134,8 +134,23 @@
     background: #d63d00;
     border-style: none;
     box-shadow: 0px 0px 2px #d63d00;
+    cursor: pointer;
 
+    /* smooth animation */
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
+
+/* Hover effect (optional but nice) */
+.product-add-to-cart:hover {
+    box-shadow: 0px 4px 8px rgba(214, 61, 0, 0.5);
+}
+
+/* Click / press effect */
+.product-add-to-cart:active {
+    transform: scale(0.95);           /* button press */
+    box-shadow: 0px 1px 3px rgba(214, 61, 0, 0.6);
+}
+
 
 
 
